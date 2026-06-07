@@ -11,8 +11,16 @@
         .subtitle { color: #9ca3af; font-size: 1.1rem; margin-bottom: 35px; font-weight: 300; }
         .badge { background: linear-gradient(135deg, #d97706, #f59e0b); color: #000; padding: 6px 18px; font-weight: bold; border-radius: 20px; display: inline-block; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(245,158,11,0.2); }
         .section-title { text-align: left; color: #f59e0b; font-size: 1.4rem; margin: 40px 0 15px 10px; border-left: 4px solid #f59e0b; padding-left: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        .section-title.special { color: #00ffcc; border-left-color: #00ffcc; }
+        
+        /* Titre Spécial pour la section Scores Exacts Premium */
+        .section-title.special { color: #00ffcc; border-left-color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.2); }
+        
         .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; text-align: left; position: relative; overflow: hidden; }
+        
+        /* DESIGN PREMIUM : Effet de lueur néon animée pour les boîtes Scores Exacts */
+        .card.premium-card { background: linear-gradient(145deg, #111827, #0b1528); border: 2px solid #00ffcc; box-shadow: 0 0 15px rgba(0, 255, 204, 0.15); animation: neonGlow 3s infinite alternate; }
+        @keyframes neonGlow { 0% { box-shadow: 0 0 15px rgba(0, 255, 204, 0.15); border-color: rgba(0, 255, 204, 0.6); } 100% { box-shadow: 0 0 25px rgba(0, 255, 204, 0.4); border-color: rgba(0, 255, 204, 1); } }
+
         .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: #9ca3af; border-bottom: 1px solid #1f2937; padding-bottom: 10px; margin-bottom: 15px; }
         .league { color: #38bdf8; font-weight: bold; }
         .time { background: #1f2937; padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; color: #ffcc00; }
@@ -134,12 +142,12 @@
                 <button class="inline-btn" onclick="checkSecureMatchCode(5)">Débloquer</button>
             </div>
         </div>
-        <!-- NOUVELLE SECTION SCORES EXACTS -->
-        <div class="section-title special">🔥 Tickets Scores Exacts (Premium)</div>
+        <!-- SECTION DESIGN STRATÉGIQUE SCORES EXACTS PREMIUM -->
+        <div class="section-title special">⚡ Tickets Scores Exacts (Premium)</div>
 
         <!-- SCORE EXACT 1 -->
-        <div class="card" style="border: 1px solid rgba(0, 255, 204, 0.3);">
-            <div class="card-header"><span class="league" style="color:#00ffcc;">⚽ PREMIER LEAGUE</span><span class="time" style="color:#00ffcc;">EXCLUSIF</span></div>
+        <div class="card premium-card">
+            <div class="card-header"><span class="league" style="color:#00ffcc;">🏆 PREMIER LEAGUE</span><span class="time" style="background:#00ffcc; color:#000;">ULTRA VIP 🔥</span></div>
             <div class="teams">Manchester City 🆚 Chelsea</div>
             <div class="analysis">Analyse ultra-précise basée sur l'historique des clean-sheets et la domination à domicile.</div>
             <div class="blur-container">
@@ -153,8 +161,8 @@
         </div>
 
         <!-- SCORE EXACT 2 -->
-        <div class="card" style="border: 1px solid rgba(0, 255, 204, 0.3);">
-            <div class="card-header"><span class="league" style="color:#00ffcc;">⚽ LALIGA</span><span class="time" style="color:#00ffcc;">EXCLUSIF</span></div>
+        <div class="card premium-card">
+            <div class="card-header"><span class="league" style="color:#00ffcc;">🏆 LALIGA</span><span class="time" style="background:#00ffcc; color:#000;">ULTRA VIP 🔥</span></div>
             <div class="teams">Real Madrid 🆚 Atletico Madrid</div>
             <div class="analysis">Derby madrilène très serré sous haute tension tactique avec une tendance défensive claire.</div>
             <div class="blur-container">
@@ -168,8 +176,8 @@
         </div>
 
         <!-- SCORE EXACT 3 -->
-        <div class="card" style="border: 1px solid rgba(0, 255, 204, 0.3);">
-            <div class="card-header"><span class="league" style="color:#00ffcc;">⚽ SERIE A</span><span class="time" style="color:#00ffcc;">EXCLUSIF</span></div>
+        <div class="card premium-card">
+            <div class="card-header"><span class="league" style="color:#00ffcc;">🏆 SERIE A</span><span class="time" style="background:#00ffcc; color:#000;">ULTRA VIP 🔥</span></div>
             <div class="teams">Inter Milan 🆚 Juventus</div>
             <div class="analysis">Choc au sommet de la Serie A. Une équipe affiche une supériorité nette dans la concrétisation.</div>
             <div class="blur-container">
@@ -192,18 +200,18 @@
     </div>
 
     <script>
-        // Base de données chiffrée en Base64 pour sécuriser les pronos standards et scores exacts
+        // Base de données masquée en Base64. Clé d'accès universelle actuelle : housseini227
         const secureDatabase = {
-            1: { key: "aG91c3NlaW5pMjI3", data: "VmljdG9pcmUgTWFuLiBVbml0ZWQ=" }, // housseini227
+            1: { key: "aG91c3NlaW5pMjI3", data: "VmljdG9pcmUgTWFuLiBVbml0ZWQ=" },
             2: { key: "aG91c3NlaW5pMjI3", data: "UGx1cyBkZSAyLjUgYnV0cw==" },
             3: { key: "aG91c3NlaW5pMjI3", data: "VmljdG9pcmUgUGFyaXMgU0c=" },
             4: { key: "aG91c3NlaW5pMjI3", data: "TGVzIDIgw6lxdWlwZXMgbWFycXVlbnQ=" },
             5: { key: "aG91c3NlaW5pMjI3", data: "TWFyc2VpbGxlIG91IE51bCAmICsxLjUgYnV0cw==" },
             
-            // Partie Scores Exacts (Même mot de passe d'accès "housseini227")
-            6: { key: "aG91c3NlaW5pMjI3", data: "U2NvcmUgRXhhY3QgOiAzIC0gMQ==" }, // Décode en: Score Exact : 3 - 1
-            7: { key: "aG91c3NlaW5pMjI3", data: "U2NvcmUgRXhhY3QgOiAxIC0gMA==" }, // Décode en: Score Exact : 1 - 0
-            8: { key: "aG91c3NlaW5pMjI3", data: "U2NvcmUgRXhhY3QgOiAyIC0gMA==" }  // Décode en: Score Exact : 2 - 0
+            // Section Scores Exacts Premium
+            6: { key: "aG91c3NlaW5pMjI3", data: "U2NvcmUgRXhhY3QgOiAzIC0gMQ==" }, // 3 - 1
+            7: { key: "aG91c3NlaW5pMjI3", data: "U2NvcmUgRXhhY3QgOiAxIC0gMA==" }, // 1 - 0
+            8: { key: "aG91c3NlaW5pMjI3", data: "U2NvcmUgRXhhY3QgOiAyIC0gMA==" }  // 2 - 0
         };
 
         function checkSecureMatchCode(matchNum) {
