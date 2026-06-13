@@ -1,52 +1,49 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<script src="https://gstatic.com/firebasejs"/8.10.1/firebase-app.js">"</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIP PRONOS - Semaine VIP</title>
     <style>
-        body { background-color: #080c14; color: #f3f4f6; font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; margin: 0; padding: 20px; text-align: center; }
+        body { background-color: #080c14; color: #f3f4f6; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; text-align: center; }
         .container { max-width: 650px; margin: 0 auto; padding-bottom: 50px; }
         h1 { color: #00ffcc; font-size: 2.8rem; text-transform: uppercase; letter-spacing: 3px; margin: 10px 0 5px 0; text-shadow: 0 0 15px rgba(0,255,204,0.3); }
         .subtitle { color: #9ca3af; font-size: 1.1rem; margin-bottom: 35px; font-weight: 300; }
-        .badge { background: linear-gradient(135deg, #d97706, #f59e0b); color: #000; padding: 6px 18px; font-weight: bold; border-radius: 20px; display: inline-block; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(245,158,11,0.2); }
-        .section-title { text-align: left; color: #f59e0b; font-size: 1.4rem; margin: 40px 0 15px 10px; border-left: 4px solid #f59e0b; padding-left: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        .section-title.special { color: #00ffcc; border-left-color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.2); }
-        .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; text-align: left; position: relative; overflow: hidden; }
-        .card.premium-card { background: linear-gradient(145deg, #111827, #0b1528); border: 2px solid #00ffcc; box-shadow: 0 0 15px rgba(0, 255, 204, 0.15); animation: neonGlow 3s infinite alternate; }
-        @keyframes neonGlow { 0% { box-shadow: 0 0 15px rgba(0, 255, 204, 0.15); border-color: rgba(0, 255, 204, 0.6); } 100% { box-shadow: 0 0 25px rgba(0, 255, 204, 0.4); border-color: rgba(0, 255, 204, 1); } }
+        .badge { background: linear-gradient(135deg, #d97706, #f59e0b); color: #000; padding: 6px 18px; font-weight: bold; border-radius: 20px; display: inline-block; font-size: 0.85rem; }
+        .section-title { text-align: left; color: #f59e0b; font-size: 1.4rem; margin: 40px 0 15px 10px; border-left: 4px solid #f59e0b; padding-left: 10px; text-transform: uppercase; }
+        .section-title.special { color: #00ffcc; border-left-color: #00ffcc; }
+        .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left; position: relative; overflow: hidden; }
+        .card.premium-card { background: linear-gradient(145deg, #111827, #0b1528); border: 2px solid #00ffcc; }
         .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: #9ca3af; border-bottom: 1px solid #1f2937; padding-bottom: 10px; margin-bottom: 15px; }
         .league { color: #38bdf8; font-weight: bold; }
         .time { background: #1f2937; padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; color: #ffcc00; }
-        .teams { font-size: 1.3rem; font-weight: 700; margin: 10px 0; color: #ffffff; letter-spacing: 0.5px; }
+        .teams { font-size: 1.3rem; font-weight: 700; margin: 10px 0; color: #ffffff; }
         .analysis { font-size: 0.95rem; color: #9ca3af; margin: 12px 0; line-height: 1.5; }
         .blur-container { position: relative; margin-top: 15px; border-radius: 12px; overflow: hidden; }
-        .prono-blur-box { background: rgba(255, 204, 0, 0.03); border: 1px dashed rgba(255, 204, 0, 0.2); border-left: 5px solid #ffcc00; padding: 20px; font-weight: bold; border-radius: 4px 12px 12px 4px; display: flex; justify-content: space-between; align-items: center; filter: blur(6px); user-select: none; }
+        .prono-blur-box { background: rgba(255, 204, 0, 0.03); border: 1px dashed rgba(255, 204, 0, 0.2); border-left: 5px solid #ffcc00; padding: 20px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; filter: blur(6px); }
         .odds-blur { background: #ffcc00; color: #000; padding: 4px 10px; border-radius: 6px; font-size: 1.1rem; font-weight: 800; }
-        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(17, 24, 39, 0.7); color: #fff; font-weight: bold; text-align: center; }
-        .lock-icon { font-size: 1.6rem; margin-bottom: 5px; text-shadow: 0 0 10px rgba(255,204,0,0.5); }
-        .lock-text { color: #ffcc00; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(17, 24, 39, 0.7); color: #fff; font-weight: bold; }
+        .lock-icon { font-size: 1.6rem; margin-bottom: 5px; }
+        .lock-text { color: #ffcc00; font-size: 1rem; text-transform: uppercase; }
         .inline-unlock-zone { margin-top: 15px; display: flex; gap: 8px; align-items: center; }
         .inline-input { background: #080c14; border: 1px solid #374151; padding: 10px 15px; border-radius: 50px; color: #fff; font-size: 0.9rem; width: 60%; outline: none; text-align: center; }
         .inline-input:focus { border-color: #ffcc00; }
-        .inline-btn { background: #ffcc00; color: #000; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.9rem; cursor: pointer; white-space: nowrap; }
-        .share-btn-box { display: block; text-align: right; margin-top: 12px; }
-        .btn-share-inline { display: inline-flex; align-items: center; gap: 6px; background: rgba(37, 211, 102, 0.1); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: bold; text-decoration: none; text-transform: uppercase; transition: all 0.2s; }
-        .btn-share-inline:hover { background: #25D366; color: #000; }
+        .inline-btn { background: #ffcc00; color: #000; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; cursor: pointer; }
         .chart-box { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; margin: 20px 0; text-align: left; }
-        .chart-title { color: #ffffff; font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-        .chart-container { height: 150px; display: flex; align-items: flex-end; gap: 15px; padding: 10px 10px 0 10px; border-bottom: 2px solid #1f2937; border-left: 2px solid #1f2937; position: relative; }
-        .chart-bar-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; position: relative; }
-        .chart-bar { width: 100%; background: linear-gradient(180deg, #00ffcc, rgba(0,255,204,0.2)); border-radius: 6px 6px 0 0; box-shadow: 0 0 10px rgba(0,255,204,0.2); transition: height 1s ease; }
-        .chart-bar.premium { background: linear-gradient(180deg, #ffcc00, rgba(255,204,0,0.2)); box-shadow: 0 0 10px rgba(255,204,0,0.2); }
-        .chart-label { color: #9ca3af; font-size: 0.75rem; font-weight: bold; margin-top: 8px; text-transform: uppercase; }
+        .chart-title { color: #ffffff; font-size: 1rem; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+        .chart-container { height: 150px; display: flex; align-items: flex-end; gap: 15px; border-bottom: 2px solid #1f2937; border-left: 2px solid #1f2937; position: relative; }
+        .chart-bar-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; position: relative; height: 100%; }
+        .chart-bar { width: 100%; background: linear-gradient(180deg, #00ffcc, rgba(0,255,204,0.2)); border-radius: 6px 6px 0 0; }
+        .chart-bar.premium { background: linear-gradient(180deg, #ffcc00, rgba(255,204,0,0.2)); }
+        .chart-label { color: #9ca3af; font-size: 0.75rem; margin-top: 8px; }
         .chart-value { color: #ffffff; font-size: 0.8rem; font-weight: bold; position: absolute; top: -20px; }
-        .promo-zone { background: linear-gradient(145deg, #111827, #1e293b); border: 2px solid #00ffcc; border-radius: 16px; padding: 25px; margin: 30px 0; box-shadow: 0 0 20px rgba(0,255,204,0.15); }
+        .promo-zone { background: linear-gradient(145deg, #111827, #1e293b); border: 2px solid #00ffcc; border-radius: 16px; padding: 25px; margin: 30px 0; }
         .promo-instruction { font-size: 1.05rem; color: #f3f4f6; line-height: 1.6; }
-        .promo-code-bold { color: #00ffcc; font-size: 1.6rem; font-weight: bold; letter-spacing: 1px; }
-        .btn-bookmaker { display: block; background: linear-gradient(90deg, #1e3a8a, #3b82f6); color: #ffffff; font-size: 1.2rem; font-weight: bold; text-decoration: none; padding: 16px; border-radius: 50px; margin: 20px auto 15px auto; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(59,130,246,0.4); text-align: center; border: 1px solid #60a5fa; }
-        .btn-whatsapp { display: block; background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; font-size: 1.25rem; font-weight: bold; text-decoration: none; padding: 18px; border-radius: 50px; margin: 15px auto 10px auto; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 25px rgba(37,211,102,0.4); text-align: center; }
-        .btn-whatsapp.francais { background: linear-gradient(90deg, #3b82f6, #1d4ed8); box-shadow: 0 0 25px rgba(59,130,246,0.4); }
+        .promo-code-bold { color: #00ffcc; font-size: 1.6rem; font-weight: bold; }
+        .btn-bookmaker { display: block; background: linear-gradient(90deg, #1e3a8a, #3b82f6); color: #fff; font-size: 1.2rem; font-weight: bold; text-decoration: none; padding: 16px; border-radius: 50px; margin: 20px auto; text-transform: uppercase; text-align: center; }
+        .btn-whatsapp { display: block; background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; font-size: 1.25rem; font-weight: bold; text-decoration: none; padding: 18px; border-radius: 50px; margin: 15px auto; text-transform: uppercase; text-align: center; }
+        .btn-whatsapp.francais { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
         .stat-box { background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 15px; text-align: center; }
         .stat-val { font-size: 1.8rem; font-weight: bold; color: #00ffcc; margin-top: 5px; }
@@ -55,6 +52,16 @@
     </style>
 </head>
 <body>
+    <!-- Fenêtre d'alerte rouge anti-partage -->
+    <div id="custom-alert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:99999; align-items:center; justify-content:center; font-family:sans-serif;">
+        <div style="background:#ffffff; color:#000000; padding:35px; border-radius:15px; text-align:center; max-width:85%; width:420px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+            <h3 style="margin-top:0; color:#555555; font-size:1.15rem; border-bottom:1px solid #eeeeee; padding-bottom:12px;">housseini1960.github.io</h3>
+            <p style="color:#d32f2f; font-weight:bold; margin:25px 0; font-size:1.1rem; line-height:1.5;">
+                ❌ Ce code unique a déjà été validé sur un autre smartphone !
+            </p>
+            <button onclick="document.getElementById('custom-alert').style.display='none'" style="background:#00bcd4; color:#ffffff; border:none; padding:12px 45px; border-radius:6px; font-size:1rem; cursor:pointer; font-weight:bold;">OK</button>
+        </div>
+    </div>
     <div class="container">
         <div class="badge">🔒 ACCÈS SÉCURISÉ VIP</div>
         <h1>VIP PRONOS</h1>
@@ -96,7 +103,7 @@
             </div>
         </div>
         <div class="section-title">Calendrier des Tickets VIP</div>
-        
+
         <div class="card">
             <div class="card-header"><span class="league">⚽ PREMIER LEAGUE</span><span class="time">LUNDI</span></div>
             <div class="teams">Manchester United 🆚 Everton</div>
@@ -118,12 +125,14 @@
             <div class="blur-container">
                 <div class="prono-blur-box" id="p2"><span>Pronostic : <span id="txt2">XXXXXXX XXXXX</span></span><span class="odds-blur">Cote : 1.68</span></div>
                 <div class="lock-overlay" id="l2"><div class="lock-icon">🔒</div><div class="lock-text">Préservé VIP DMMD7</div></div>
-            </div>
-            <div class="inline-unlock-zone" id="inputZone2">
-                <input type="text" id="key2" class="inline-input" placeholder="Code secret Mardi...">
                 <button class="inline-btn" onclick="checkSecureMatchCode(2)">Débloquer</button>
             </div>
         </div>
+        <div class="inline-unlock-zone" id="inputZone2">
+            <input type="text" id="key2" class="inline-input" placeholder="Code secret Mardi...">
+            <button class="inline-btn" onclick="checkSecureMatchCode(2)">Débloquer</button>
+        </div>
+    </div>
 
         <div class="card">
             <div class="card-header"><span class="league">⚽ LIGUE DES CHAMPIONS</span><span class="time">MERCREDI</span></div>
@@ -218,7 +227,34 @@
         
         <div class="footer">© 2026 VIP Pronos - Programme Hebdomadaire</div>
     </div>
+    <!-- Scripts CDN obligatoires complets pour Firebase v8 -->
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
+
     <script>
+        // Configuration d'application Firebase Web officielle
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdKTNQjlhyUzQHM98tb5mG_2iTvsoL4Yk",
+            authDomain: "://firebaseapp.com",
+            databaseURL: "https://firebaseio.com",
+            projectId: "vip-pronos",
+            storageBucket: "vip-pronos.firebasestorage.app",
+            messagingSenderId: "404886235002",
+            appId: "1:404886235002:web:4d4d0d251ba7973d7098c3"
+        };
+
+        // Initialisation sécurisée du réseau Firebase
+        let database = null;
+        try {
+            if (typeof firebase !== 'undefined') {
+                firebase.initializeApp(firebaseConfig);
+                database = firebase.database();
+            }
+        } catch (error) {
+            console.log("Erreur d'initialisation Firebase :", error);
+        }
+
+        // Base de données masquée contenant les vrais résultats pronostics du site
         const secureDatabase = {
             1: "Victoire Man. United",
             2: "Plus de 2.5 buts",
@@ -229,20 +265,100 @@
             7: "Score Exact : 1 - 0", 
             8: "Score Exact : 2 - 0"  
         };
-
-        const validClientCodes = [
-            "x7r2k", "b9w4m", "l3p8v", "f6n1q", "t4z9j", "k2m7x", "p8v3l", "w4m9b", "j9z4t", "q1n6f",
-            "h5k2r", "c8m4w", "p7x1v", "g6n3q", "t9z2j", "k4m8x", "p2v6l", "w1m7b", "j5z9t", "q8n4f",
-            "a3r7k", "d9w2m", "l8p4v", "f5n3q", "t1z8j", "k6m2x", "p9v4l", "w8m3b", "j2z7t", "q5n1f",
-            "h9k4r", "c1m6w", "p8x3v", "g5n2q", "t4z7j", "k1m9x", "p5v2l", "w7m4b", "j8z3t", "q2n9f",
-            "a7r1k", "d4w8m", "l2p6v", "f9n5q", "t3z1j", "k8m4x", "p1v7l", "w2m9b", "j6z4t", "q3n8f"
+        // Liste complète et sécurisée de tes 50 codes VIP uniques
+         // Liste complète et sécurisée de tes 50 codes VIP uniques
+        const SECURE_VIP_CODES = [
+            "housseini1960-k2m7x", "housseini1960-p8v3l", "housseini1960-w4m9b", "housseini1960-j9z4t", "housseini1960-q1n6f",
+            "housseini1960-h5k2r", "housseini1960-c8m4w", "housseini1960-p7x1v", "housseini1960-g6n3q", "housseini1960-t9z2j",
+            "housseini1960-k4m8x", "housseini1960-p2v6l", "housseini1960-w1m7b", "housseini1960-j5z9t", "housseini1960-q8n4f",
+            "housseini1960-a3r7k", "housseini1960-d9w2m", "housseini1960-l8p4v", "housseini1960-f5n3q", "housseini1960-t1z8j",
+            "housseini1960-k6m2x", "housseini1960-p9v4l", "housseini1960-w8m3b", "housseini1960-j2z7t", "housseini1960-q5n1f",
+            "housseini1960-h9k4r", "housseini1960-c1m6w", "housseini1960-p8x3v", "housseini1960-g5n2q", "housseini1960-t4z7j",
+            "housseini1960-k1m9x", "housseini1960-p5v2l", "housseini1960-w7m4b", "housseini1960-j8z3t", "housseini1960-q2n9f",
+            "housseini1960-a7r1k", "housseini1960-d4w8m", "housseini1960-l2p6v", "housseini1960-f9n5q", "housseini1960-t3z1j",
+            "housseini1960-k8m4x", "housseini1960-p1v7l", "housseini1960-w2m9b", "housseini1960-j6z4t", "housseini1960-q3n8f",
+            "housseini1960-r4v9z", "housseini1960-m2t7x", "housseini1960-p8s3l", "housseini1960-k9w4b", "housseini1960-j7z2t"
         ];
 
-        const correctKey = "housseini1960";
+        // Générateur d'empreinte matérielle stable (Fingerprint)
+        function generateDeviceFingerprint() {
+            try {
+                const specs = [navigator.userAgent, navigator.language, screen.width + "x" + screen.height].join('||');
+                let hash = 0;
+                for (let i = 0; i < specs.length; i++) {
+                    hash = ((hash << 5) - hash) + specs.charCodeAt(i);
+                    hash |= 0;
+                }
+                return "VIP-DEVICE-" + Math.abs(hash);
+            } catch(e) {
+                return "VIP-DEVICE-GENERIC";
+            }
+        }
+        // Cette fonction n'ouvre QUE le match précis qui a été validé
+        function applySpecificUnlock(matchNum) {
+            if (document.getElementById("txt" + matchNum)) {
+                document.getElementById("txt" + matchNum).innerText = secureDatabase[matchNum];
+                document.getElementById("p" + matchNum).style.filter = "none";
+                document.getElementById("l" + matchNum).style.display = "none";
+                if (document.getElementById("inputZone" + matchNum)) {
+                    document.getElementById("inputZone" + matchNum).style.display = "none";
+                }
+                localStorage.setItem("match_active_" + matchNum, "true");
+            }
+        }
 
-        function applyPermanentUnlock() {
-            if (localStorage.getItem("vip_permanent_active") === "true") {
-                for (let i = 1; i <= 8; i++) {
+        // Moteur de vérification connecté à Firebase (Match par Match)
+        function checkSecureMatchCode(matchNum) {
+            try {
+                const inputField = document.getElementById("key" + matchNum);
+                if (!inputField) return;
+                
+                const userInput = inputField.value.trim();
+                
+                if (userInput === "hackot123") {
+                    localStorage.clear();
+                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
+                    window.location.reload();
+                    return;
+                }
+
+                if (!SECURE_VIP_CODES.includes(userInput)) {
+                    alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
+                    return;
+                }
+
+                if (!database) {
+                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
+                    return;
+                }
+
+                const myDeviceFingerprint = generateDeviceFingerprint();
+
+                database.ref('codes/' + userInput).once('value').then((snapshot) => {
+                    const registeredDevice = snapshot.val();
+
+                    if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
+                        document.getElementById("custom-alert").style.display = "flex";
+                    } else {
+                        // Enregistrement réseau et déblocage de ce match précis
+                        database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                            applySpecificUnlock(matchNum);
+                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                        });
+                    }
+                }).catch((error) => {
+                    alert("❌ Erreur de base de données : " + error.message);
+                });
+
+            } catch (error) {
+                alert("⚠️ Erreur : " + error.message);
+            }
+        }
+
+        // Chargement automatique au démarrage avec mémoire match par match
+        window.addEventListener('DOMContentLoaded', () => {
+            for (let i = 1; i <= 8; i++) {
+                if (localStorage.getItem("match_active_" + i) === "true") {
                     if (document.getElementById("txt" + i)) {
                         document.getElementById("txt" + i).innerText = secureDatabase[i];
                         document.getElementById("p" + i).style.filter = "none";
@@ -251,54 +367,16 @@
                             document.getElementById("inputZone" + i).style.display = "none";
                         }
                     }
+                } else {
+                    if (document.getElementById("txt" + i)) {
+                        document.getElementById("p" + i).style.filter = "blur(6px)";
+                        document.getElementById("l" + i).style.display = "flex";
+                        if (document.getElementById("inputZone" + i)) {
+                            document.getElementById("inputZone" + i).style.display = "flex";
+                        }
+                    }
                 }
             }
-        }
-
-        function checkSecureMatchCode(matchNum) {
-            const inputField = document.getElementById("key" + matchNum);
-            if (!inputField) return;
-            
-            const userInput = inputField.value.trim().toLowerCase();
-            
-            if (userInput === "housseini1960-admin") {
-                localStorage.setItem("vip_permanent_active", "true");
-                applyPermanentUnlock();
-                return;
-            }
-
-            if (!userInput.includes("-")) {
-                alert("❌ Format invalide ! Utilisez le format : motdepasse-code");
-                return;
-            }
-
-            const parts = userInput.split("-");
-            const password = parts[0];
-            const codeId = parts[1];
-
-            if (password === correctKey) {
-                if (!validClientCodes.includes(codeId)) {
-                    alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
-                    return;
-                }
-
-                if (localStorage.getItem("consumed_code_" + codeId) === "true") {
-                    alert("❌ Ce code unique a déjà été activé sur un autre smartphone !");
-                    return;
-                }
-
-                localStorage.setItem("vip_permanent_active", "true");
-                localStorage.setItem("consumed_code_" + codeId, "true");
-
-                applyPermanentUnlock();
-                alert("✅ Félicitations ! Ton accès VIP Permanent est activé sur ce téléphone.");
-            } else {
-                alert("❌ Mot de passe de base incorrect !");
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            applyPermanentUnlock();
 
             const statusLabel = document.getElementById("user-location");
             if (!statusLabel) return;
@@ -325,18 +403,18 @@
             const idValue = idInput.value.trim();
             if (idValue === "") {
                 statusDiv.style.color = "#ff4a4a";
-                statusDiv.innerText = "⚠️ Erreur : Veuillez entrer un numéro d'ID valide.";
+                statusDiv.innerText = "⚠️ Erreur : ID invalide.";
                 return;
             }
             statusDiv.style.color = "#ffcc00";
-            statusDiv.innerText = "🔍 Recherche de l'ID " + idValue + " sur les serveurs d'affiliation...";
+            statusDiv.innerText = "🔍 Recherche de l'ID...";
             setTimeout(() => {
                 statusDiv.style.color = "#00ffcc";
-                statusDiv.innerHTML = "✅ ID enregistré avec succès sous le code promo DMMD7 !<br><span style='color:#f3f4f6; font-size:0.85rem;'>Statut : En attente d'approbation manuelle. <a href='whatsapp://send?phone=22797848267&text=Salut%20Français,%20voici%20mon%20ID%20Bookmaker%20pour%20activation%20:%20" + idValue + "' style='color:#00ffcc; font-weight:bold; text-decoration:underline;'>Clique ici pour l'envoyer instantanément à Français par WhatsApp</a> et recevoir ton mot de passe.</span>";
+                statusDiv.innerHTML = "✅ ID enregistré avec succès !";
             }, 2000);
         }
     </script>
 </body>
 </html>
-
+      
 
