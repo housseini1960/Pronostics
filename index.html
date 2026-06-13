@@ -1,7 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<script src="https://gstatic.com/firebasejs"/8.10.1/firebase-app.js">"</script>
+    <script src="https://gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+        // Configuration officielle de ton projet Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdKTNQjlhyUzQHM98tb5mG_2iTvsoL4Yk",
+            authDomain: "vip-pronos.firebaseapp.com",
+            databaseURL: "https://vip-pronos-default-rtdb.firebaseio.com",
+            projectId: "vip-pronos",
+            storageBucket: "vip-pronos.firebasestorage.app",
+            messagingSenderId: "404886235002",
+            appId: "1:404886235002:web:3f63c2c041f62bbc7098c3"
+        };
+
+        // Initialisation globale du réseau Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIP PRONOS - Semaine VIP</title>
