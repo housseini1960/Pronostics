@@ -95,119 +95,6 @@
                 <div class="chart-bar-wrapper"><div class="chart-value">+190%</div><div class="chart-bar premium" style="height: 100%;"></div><div class="chart-label">Scores Ex.</div></div>
             </div>
         </div>
-    <script>
-        const secureDatabase = {
-            1: "Victoire Man. United",
-            2: "Plus de 2.5 buts",
-            3: "Victoire Paris SG",
-            4: "Les 2 équipes marquent",
-            5: "Marseille ou Nul & +1.5 buts",
-            6: "Score Exact : 3 - 1", 
-            7: "Score Exact : 1 - 0", 
-            8: "Score Exact : 2 - 0"  
-        };
-
-        // Liste officielle des 50 codes clients uniques et cryptés (Impossibles à deviner)
-        const validClientCodes = [
-            "x7r2k", "b9w4m", "l3p8v", "f6n1q", "t4z9j", "k2m7x", "p8v3l", "w4m9b", "j9z4t", "q1n6f",
-            "h5k2r", "c8m4w", "p7x1v", "g6n3q", "t9z2j", "k4m8x", "p2v6l", "w1m7b", "j5z9t", "q8n4f",
-            "a3r7k", "d9w2m", "l8p4v", "f5n3q", "t1z8j", "k6m2x", "p9v4l", "w8m3b", "j2z7t", "q5n1f",
-            "h9k4r", "c1m6w", "p8x3v", "g5n2q", "t4z7j", "k1m9x", "p5v2l", "w7m4b", "j8z3t", "q2n9f",
-            "a7r1k", "d4w8m", "l2p6v", "f9n5q", "t3z1j", "k8m4x", "p1v7l", "w2m9b", "j6z4t", "q3n8f"
-        ];
-
-        const correctKey = "housseini1960";
-
-        function checkSecureMatchCode(matchNum) {
-            const inputField = document.getElementById("key" + matchNum);
-            if (!inputField) return;
-            
-            const userInput = inputField.value.trim().toLowerCase();
-            
-            // 1. Code Maître ADMIN (Toujours actif pour toi et Français)
-            if (userInput === "housseini1960-admin") {
-                document.getElementById("txt" + matchNum).innerText = secureDatabase[matchNum];
-                document.getElementById("p" + matchNum).style.filter = "none";
-                document.getElementById("l" + matchNum).style.display = "none";
-                document.getElementById("inputZone" + matchNum).style.display = "none";
-                return;
-            }
-
-            if (!userInput.includes("-")) {
-                alert("❌ Format invalide ! Utilisez le format fourni par Housseini.");
-                return;
-            }
-
-            const parts = userInput.split("-");
-            const password = parts[0];
-            const codeId = parts[1];
-
-            if (password === correctKey) {
-                // SÉCURITÉ 1 : Est-ce que le code existe dans la liste secrète ?
-                if (!validClientCodes.includes(codeId)) {
-                    alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
-                    return;
-                }
-
-                // SÉCURITÉ 2 : Est-ce que ce code a déjà été consommé par un autre téléphone ?
-                const usedCodes = JSON.parse(localStorage.getItem("used_vip_codes") || "[]");
-                if (usedCodes.includes(codeId)) {
-                    alert("❌ Ce code unique a déjà été validé sur un autre smartphone !");
-                    return;
-                }
-
-                // Si tout est OK, on bloque le code localement et on affiche le pronostic
-                usedCodes.push(codeId);
-                localStorage.setItem("used_vip_codes", JSON.stringify(usedCodes));
-
-                document.getElementById("txt" + matchNum).innerText = secureDatabase[matchNum];
-                document.getElementById("p" + matchNum).style.filter = "none";
-                document.getElementById("l" + matchNum).style.display = "none";
-                document.getElementById("inputZone" + matchNum).style.display = "none";
-            } else {
-                alert("❌ Mot de passe de base incorrect !");
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const statusLabel = document.getElementById("user-location");
-            if (!statusLabel) return;
-            try {
-                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                if (timeZone.includes("Niamey") || timeZone.includes("Lagos")) {
-                    statusLabel.innerText = "🇳🇪 ZONE VIP ACTIVÉE : NIGER / AFRIQUE DE L'OUEST";
-                } else if (timeZone.includes("Abidjan") || timeZone.includes("Accra")) {
-                    statusLabel.innerText = "🇨🇮 ZONE VIP ACTIVÉE : CÔTE D'IVOIRE";
-                } else if (timeZone.includes("Paris") || timeZone.includes("Europe")) {
-                    statusLabel.innerText = "🇫🇷 ZONE VIP ACTIVÉE : EUROPE / FRANCE";
-                } else {
-                    statusLabel.innerText = "🌍 ZONE VIP SÉCURISÉE INTERNATIONALE";
-                }
-            } catch (e) {
-                statusLabel.innerText = "🌍 ACCÈS VIP RECONNU & ACCEPTÉ";
-            }
-        });
-
-        function verifyUserRegistration() {
-            const idInput = document.getElementById("user-id-input");
-            const statusDiv = document.getElementById("verification-status");
-            if (!idInput || !statusDiv) return;
-            const idValue = idInput.value.trim();
-            if (idValue === "") {
-                statusDiv.style.color = "#ff4a4a";
-                statusDiv.innerText = "⚠️ Erreur : Veuillez entrer un numéro d'ID valide.";
-                return;
-            }
-            statusDiv.style.color = "#ffcc00";
-            statusDiv.innerText = "🔍 Recherche de l'ID " + idValue + " sur les serveurs d'affiliation...";
-            setTimeout(() => {
-                statusDiv.style.color = "#00ffcc";
-                statusDiv.innerHTML = "✅ ID enregistré avec succès sous le code promo DMMD7 !<br><span style='color:#f3f4f6; font-size:0.85rem;'>Statut : En attente d'approbation manuelle. <a href='whatsapp://send?phone=22797848267&text=Salut%20Français,%20voici%20mon%20ID%20Bookmaker%20pour%20activation%20:%20" + idValue + "' style='color:#00ffcc; font-weight:bold; text-decoration:underline;'>Clique ici pour l'envoyer instantanément à Français par WhatsApp</a> et recevoir ton mot de passe.</span>";
-            }, 2000);
-        }
-    </script>
-</body>
-</html>
         <div class="section-title">Calendrier des Tickets VIP</div>
         
         <div class="card">
@@ -279,7 +166,6 @@
                 <button class="inline-btn" onclick="checkSecureMatchCode(5)">Débloquer</button>
             </div>
         </div>
-        
         <div class="section-title special">⚡ Tickets Scores Exacts (Premium)</div>
 
         <div class="card premium-card">
@@ -332,4 +218,124 @@
         
         <div class="footer">© 2026 VIP Pronos - Programme Hebdomadaire</div>
     </div>
+    <script>
+        const secureDatabase = {
+            1: "Victoire Man. United",
+            2: "Plus de 2.5 buts",
+            3: "Victoire Paris SG",
+            4: "Les 2 équipes marquent",
+            5: "Marseille ou Nul & +1.5 buts",
+            6: "Score Exact : 3 - 1", 
+            7: "Score Exact : 1 - 0", 
+            8: "Score Exact : 2 - 0"  
+        };
+
+        const validClientCodes = [
+            "x7r2k", "b9w4m", "l3p8v", "f6n1q", "t4z9j", "k2m7x", "p8v3l", "w4m9b", "j9z4t", "q1n6f",
+            "h5k2r", "c8m4w", "p7x1v", "g6n3q", "t9z2j", "k4m8x", "p2v6l", "w1m7b", "j5z9t", "q8n4f",
+            "a3r7k", "d9w2m", "l8p4v", "f5n3q", "t1z8j", "k6m2x", "p9v4l", "w8m3b", "j2z7t", "q5n1f",
+            "h9k4r", "c1m6w", "p8x3v", "g5n2q", "t4z7j", "k1m9x", "p5v2l", "w7m4b", "j8z3t", "q2n9f",
+            "a7r1k", "d4w8m", "l2p6v", "f9n5q", "t3z1j", "k8m4x", "p1v7l", "w2m9b", "j6z4t", "q3n8f"
+        ];
+
+        const correctKey = "housseini1960";
+
+        function applyPermanentUnlock() {
+            if (localStorage.getItem("vip_permanent_active") === "true") {
+                for (let i = 1; i <= 8; i++) {
+                    if (document.getElementById("txt" + i)) {
+                        document.getElementById("txt" + i).innerText = secureDatabase[i];
+                        document.getElementById("p" + i).style.filter = "none";
+                        document.getElementById("l" + i).style.display = "none";
+                        if (document.getElementById("inputZone" + i)) {
+                            document.getElementById("inputZone" + i).style.display = "none";
+                        }
+                    }
+                }
+            }
+        }
+
+        function checkSecureMatchCode(matchNum) {
+            const inputField = document.getElementById("key" + matchNum);
+            if (!inputField) return;
+            
+            const userInput = inputField.value.trim().toLowerCase();
+            
+            if (userInput === "housseini1960-admin") {
+                localStorage.setItem("vip_permanent_active", "true");
+                applyPermanentUnlock();
+                return;
+            }
+
+            if (!userInput.includes("-")) {
+                alert("❌ Format invalide ! Utilisez le format : motdepasse-code");
+                return;
+            }
+
+            const parts = userInput.split("-");
+            const password = parts[0];
+            const codeId = parts[1];
+
+            if (password === correctKey) {
+                if (!validClientCodes.includes(codeId)) {
+                    alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
+                    return;
+                }
+
+                if (localStorage.getItem("consumed_code_" + codeId) === "true") {
+                    alert("❌ Ce code unique a déjà été activé sur un autre smartphone !");
+                    return;
+                }
+
+                localStorage.setItem("vip_permanent_active", "true");
+                localStorage.setItem("consumed_code_" + codeId, "true");
+
+                applyPermanentUnlock();
+                alert("✅ Félicitations ! Ton accès VIP Permanent est activé sur ce téléphone.");
+            } else {
+                alert("❌ Mot de passe de base incorrect !");
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            applyPermanentUnlock();
+
+            const statusLabel = document.getElementById("user-location");
+            if (!statusLabel) return;
+            try {
+                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (timeZone.includes("Niamey") || timeZone.includes("Lagos")) {
+                    statusLabel.innerText = "🇳🇪 ZONE VIP ACTIVÉE : NIGER / AFRIQUE DE L'OUEST";
+                } else if (timeZone.includes("Abidjan") || timeZone.includes("Accra")) {
+                    statusLabel.innerText = "🇨🇮 ZONE VIP ACTIVÉE : CÔTE D'IVOIRE";
+                } else if (timeZone.includes("Paris") || timeZone.includes("Europe")) {
+                    statusLabel.innerText = "🇫🇷 ZONE VIP ACTIVÉE : EUROPE / FRANCE";
+                } else {
+                    statusLabel.innerText = "🌍 ZONE VIP SÉCURISÉE INTERNATIONALE";
+                }
+            } catch (e) {
+                statusLabel.innerText = "🌍 ACCÈS VIP RECONNU & ACCEPTÉ";
+            }
+        });
+
+        function verifyUserRegistration() {
+            const idInput = document.getElementById("user-id-input");
+            const statusDiv = document.getElementById("verification-status");
+            if (!idInput || !statusDiv) return;
+            const idValue = idInput.value.trim();
+            if (idValue === "") {
+                statusDiv.style.color = "#ff4a4a";
+                statusDiv.innerText = "⚠️ Erreur : Veuillez entrer un numéro d'ID valide.";
+                return;
+            }
+            statusDiv.style.color = "#ffcc00";
+            statusDiv.innerText = "🔍 Recherche de l'ID " + idValue + " sur les serveurs d'affiliation...";
+            setTimeout(() => {
+                statusDiv.style.color = "#00ffcc";
+                statusDiv.innerHTML = "✅ ID enregistré avec succès sous le code promo DMMD7 !<br><span style='color:#f3f4f6; font-size:0.85rem;'>Statut : En attente d'approbation manuelle. <a href='whatsapp://send?phone=22797848267&text=Salut%20Français,%20voici%20mon%20ID%20Bookmaker%20pour%20activation%20:%20" + idValue + "' style='color:#00ffcc; font-weight:bold; text-decoration:underline;'>Clique ici pour l'envoyer instantanément à Français par WhatsApp</a> et recevoir ton mot de passe.</span>";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
 
