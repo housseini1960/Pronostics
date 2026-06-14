@@ -417,6 +417,66 @@
                 statusDiv.style.color = "#00ffcc";
                 statusDiv.innerHTML = "✅ ID enregistré avec succès !";
             }, 2000);
+                        // Cette fonction n'ouvre QUE le match précis qui a été validé
+        function applySpecificUnlock(matchNum) {
+            if (document.getElementById("txt" + matchNum)) {
+                document.getElementById("txt" + matchNum).innerText = secureDatabase[matchNum];
+                document.getElementById("p" + matchNum).style.filter = "none";
+                document.getElementById("l" + matchNum).style.display = "none";
+                if (document.getElementById("inputZone" + matchNum)) {
+                    document.getElementById("inputZone" + matchNum).style.display = "none";
+                }
+                localStorage.setItem("match_active_" + matchNum, "true");
+            }
+        }
+
+        // Moteur de vérification connecté à Firebase (Match par Match)
+        function checkSecureMatchCode(matchNum) {
+            try {
+                const inputField = document.getElementById("key" + matchNum);
+                if (!inputField) return;
+                
+                const userInput = inputField.value.trim();
+                
+                if (userInput === "hackot123") {
+                    localStorage.clear();
+                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
+                    window.location.reload();
+                    return;
+                }
+
+                if (!SECURE_VIP_CODES.includes(userInput)) {
+                    alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
+                    return;
+                }
+
+                if (!database) {
+                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
+                    return;
+                }
+
+                const myDeviceFingerprint = generateDeviceFingerprint();
+
+                database.ref('codes/' + userInput).once('value').then((snapshot) => {
+                    const registeredDevice = snapshot.val();
+
+                    if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
+                        alert("❌ Ce code est déjà utilisé sur un autre téléphone !");
+                    } else {
+                        database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                            applySpecificUnlock(matchNum);
+                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                        });
+                    }
+                }).catch((error) => {
+                    alert("❌ Erreur de base de données : " + error.message);
+                });
+
+            } catch (error) {
+                alert("⚠️ Erreur : " + error.message);
+            }
+        }
+
         }
     </script>
 </body>
