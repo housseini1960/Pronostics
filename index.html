@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
     
-
     <script>
-    // Configuration officielle de ton projet Firebase
+        // Configuration officielle de ton projet Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBdKTNQjlhyUzQHM98tb5mG_2iTvsoL4Yk",
-            authDomain: "vip-pronos.firebaseapp.com",
-            databaseURL: "https://vip-pronos-default-rtdb.firebaseio.com",
+            authDomain: "://firebaseapp.com",
+            databaseURL: "https://firebaseio.com",
             projectId: "vip-pronos",
             storageBucket: "vip-pronos.firebasestorage.app",
             messagingSenderId: "404886235002",
@@ -98,7 +96,6 @@
             <div class="promo-instruction" style="margin-top:25px;">
                 <strong>Étape 2 :</strong> Envoie ta <strong>capture d'écran</strong> sur WhatsApp pour obtenir ton mot de passe d'accès unique.
             </div>
-            
             <a href="whatsapp://send?phone=22774126709&text=Salut%20Housseini,%20voici%20ma%20preuve%20DMMD7" class="btn-whatsapp">💬 Envoyer à Housseini</a>
             <a href="whatsapp://send?phone=22797848267&text=Salut%20Français,%20voici%20ma%20preuve%20DMMD7" class="btn-whatsapp francais">💬 Envoyer à Français</a>
             
@@ -146,14 +143,12 @@
             <div class="blur-container">
                 <div class="prono-blur-box" id="p2"><span>Pronostic : <span id="txt2">XXXXXXX XXXXX</span></span><span class="odds-blur">Cote : 1.68</span></div>
                 <div class="lock-overlay" id="l2"><div class="lock-icon">🔒</div><div class="lock-text">Préservé VIP DMMD7</div></div>
+            </div>
+            <div class="inline-unlock-zone" id="inputZone2">
+                <input type="text" id="key2" class="inline-input" placeholder="Code secret Mardi...">
                 <button class="inline-btn" onclick="checkSecureMatchCode(2)">Débloquer</button>
             </div>
         </div>
-        <div class="inline-unlock-zone" id="inputZone2">
-            <input type="text" id="key2" class="inline-input" placeholder="Code secret Mardi...">
-            <button class="inline-btn" onclick="checkSecureMatchCode(2)">Débloquer</button>
-        </div>
-    </div>
 
         <div class="card">
             <div class="card-header"><span class="league">⚽ LIGUE DES CHAMPIONS</span><span class="time">MERCREDI</span></div>
@@ -196,8 +191,8 @@
                 <button class="inline-btn" onclick="checkSecureMatchCode(5)">Débloquer</button>
             </div>
         </div>
+        
         <div class="section-title special">⚡ Tickets Scores Exacts (Premium)</div>
-
         <div class="card premium-card">
             <div class="card-header"><span class="league" style="color:#00ffcc;">🏆 PREMIER LEAGUE</span><span class="time" style="background:#00ffcc; color:#000;">ULTRA VIP 🔥</span></div>
             <div class="teams">Manchester City 🆚 Chelsea</div>
@@ -248,10 +243,8 @@
         
         <div class="footer">© 2026 VIP Pronos - Programme Hebdomadaire</div>
     </div>
-<script>
 
-        
-
+    <script>
         // Base de données masquée contenant les vrais résultats pronostics du site
         const secureDatabase = {
             1: "Victoire Man. United",
@@ -263,8 +256,8 @@
             7: "Score Exact : 1 - 0", 
             8: "Score Exact : 2 - 0"  
         };
+
         // Liste complète et sécurisée de tes 50 codes VIP uniques
-         // Liste complète et sécurisée de tes 50 codes VIP uniques
         const SECURE_VIP_CODES = [
             "housseini1960-k2m7x", "housseini1960-p8v3l", "housseini1960-w4m9b", "housseini1960-j9z4t", "housseini1960-q1n6f",
             "housseini1960-h5k2r", "housseini1960-c8m4w", "housseini1960-p7x1v", "housseini1960-g6n3q", "housseini1960-t9z2j",
@@ -277,7 +270,6 @@
             "housseini1960-k8m4x", "housseini1960-p1v7l", "housseini1960-w2m9b", "housseini1960-j6z4t", "housseini1960-q3n8f",
             "housseini1960-r4v9z", "housseini1960-m2t7x", "housseini1960-p8s3l", "housseini1960-k9w4b", "housseini1960-j7z2t"
         ];
-
         // Générateur d'empreinte matérielle stable (Fingerprint)
         function generateDeviceFingerprint() {
             try {
@@ -292,6 +284,7 @@
                 return "VIP-DEVICE-GENERIC";
             }
         }
+
         // Cette fonction n'ouvre QUE le match précis qui a été validé
         function applySpecificUnlock(matchNum) {
             if (document.getElementById("txt" + matchNum)) {
@@ -304,7 +297,6 @@
                 localStorage.setItem("match_active_" + matchNum, "true");
             }
         }
-
         // Moteur de vérification connecté à Firebase (Match par Match)
         function checkSecureMatchCode(matchNum) {
             try {
@@ -313,15 +305,15 @@
                 
                 const userInput = inputField.value.trim();
                 
+                if (userInput === "") {
+                    alert("Veuillez saisir un code.");
+                    return;
+                }
+                
                 if (userInput === "hackot123") {
                     localStorage.clear();
                     alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
                     window.location.reload();
-                    return;
-                }
-
-                if (!SECURE_VIP_CODES.includes(userInput)) {
-                    alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
                     return;
                 }
 
@@ -332,16 +324,37 @@
 
                 const myDeviceFingerprint = generateDeviceFingerprint();
 
-                database.ref('codes/' + userInput).once('value').then((snapshot) => {
-                    const registeredDevice = snapshot.val();
-
-                    if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
-                        document.getElementById("custom-alert").style.display = "flex";
-                    } else {
-                        // Enregistrement réseau et déblocage de ce match précis
-                        database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
-                            applySpecificUnlock(matchNum);
+                // 1. Vérification du code simplifié dans "codes_promos"
+                const promoRef = database.ref('codes_promos/' + userInput);
+                
+                promoRef.once('value').then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const estUtilise = snapshot.val();
+                        if (estUtilise === false) {
                             alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                            applySpecificUnlock(matchNum);
+                            promoRef.set(true); // Bloque le code instantanément
+                        } else {
+                            document.getElementById("custom-alert").style.display = "flex";
+                        }
+                    } else {
+                        // 2. Vérification du code complexe (SECURE_VIP_CODES)
+                        if (!SECURE_VIP_CODES.includes(userInput)) {
+                            alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
+                            return;
+                        }
+
+                        database.ref('codes/' + userInput).once('value').then((snapCodes) => {
+                            const registeredDevice = snapCodes.val();
+
+                            if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
+                                document.getElementById("custom-alert").style.display = "flex";
+                            } else {
+                                database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                                    applySpecificUnlock(matchNum);
+                                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                                });
+                            }
                         });
                     }
                 }).catch((error) => {
@@ -394,140 +407,8 @@
             }
         });
 
+        // Fonction de vérification de l'ID Bookmaker
         function verifyUserRegistration() {
-            const idInput = document.getElementById("user-id-input");
-            const statusDiv = document.getElementById("verification-status");
-            if (!idInput || !statusDiv) return;
-            const idValue = idInput.value.trim();
-            if (idValue === "") {
-                statusDiv.style.color = "#ff4a4a";
-                statusDiv.innerText = "⚠️ Erreur : ID invalide.";
-                return;
-            }
-            statusDiv.style.color = "#ffcc00";
-            statusDiv.innerText = "🔍 Recherche de l'ID...";
-            setTimeout(() => {
-                statusDiv.style.color = "#00ffcc";
-                statusDiv.innerHTML = "✅ ID enregistré avec succès !";
-            }, 2000);
-                        // Cette fonction n'ouvre QUE le match précis qui a été validé
-        function applySpecificUnlock(matchNum) {
-            if (document.getElementById("txt" + matchNum)) {
-                document.getElementById("txt" + matchNum).innerText = secureDatabase[matchNum];
-                document.getElementById("p" + matchNum).style.filter = "none";
-                document.getElementById("l" + matchNum).style.display = "none";
-                if (document.getElementById("inputZone" + matchNum)) {
-                    document.getElementById("inputZone" + matchNum).style.display = "none";
-                }
-                localStorage.setItem("match_active_" + matchNum, "true");
-            }
-        }
-
-        // Moteur de vérification connecté à Firebase (Match par Match)
-        function checkSecureMatchCode(matchNum) {
-            try {
-                const inputField = document.getElementById("key" + matchNum);
-                if (!inputField) return;
-                
-                const userInput = inputField.value.trim();
-                
-                if (userInput === "hackot123") {
-                    localStorage.clear();
-                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
-                    window.location.reload();
-                    return;
-                }
-
-                if (!SECURE_VIP_CODES.includes(userInput)) {
-                    alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
-                    return;
-                }
-
-                if (!database) {
-                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
-                    return;
-                }
-
-                const myDeviceFingerprint = generateDeviceFingerprint();
-
-                database.ref('codes/' + userInput).once('value').then((snapshot) => {
-                    const registeredDevice = snapshot.val();
-
-                    if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
-                        alert("❌ Ce code est déjà utilisé sur un autre téléphone !");
-                    } else {
-                        database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
-                            applySpecificUnlock(matchNum);
-                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                        });
-                    }
-                }).catch((error) => {
-                    alert("❌ Erreur de base de données : " + error.message);
-                });
-
-               // Moteur de vérification connecté à Firebase (Match par Match)
-        function checkSecureMatchCode(matchNum) {
-            try {
-                const inputField = document.getElementById("key" + matchNum);
-                if (!inputField) return;
-                
-                const userInput = inputField.value.trim();
-                
-                if (userInput === "") {
-                    alert("Veuillez saisir un code.");
-                    return;
-                }
-                
-                // Code secret administrateur pour tout réinitialiser
-                if (userInput === "hackot123") {
-                    localStorage.clear();
-                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
-                    window.location.reload();
-                    return;
-                }
-
-                if (!database) {
-                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
-                    return;
-                }
-
-                const myDeviceFingerprint = generateDeviceFingerprint();
-
-                // On vérifie d'abord dans ton dossier simplifié "codes_promos" créé ensemble
-                const promoRef = database.ref('codes_promos/' + userInput);
-                
-                promoRef.once('value').then((snapshot) => {
-                    if (snapshot.exists()) {
-                        // LOGIQUE CODES SIMPLES (ex: PRONO55)
-                        const estUtilise = snapshot.val();
-                        if (estUtilise === false) {
-                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                            applySpecificUnlock(matchNum);
-                            promoRef.set(true); // Bloque le code
-                        } else {
-                            document.getElementById("custom-alert").style.display = "flex";
-                        }
-                    } else {
-                        // LOGIQUE CODES COMPLEXES DE TA LISTE (SECURE_VIP_CODES)
-                        if (!SECURE_VIP_CODES.includes(userInput)) {
-                            alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
-                            return;
-                        }
-
-                        database.ref('codes/' + userInput).once('value').then((snapCodes) => {
-                            const registeredDevice = snapCodes.val();
-
-                            if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
-                                document.getElementById("custom-alert").style.display = "flex";
-                            } else {
-                                database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
-                                    applySpecificUnlock(matchNum);
-                                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                                });
-                            }
-                        });
-                    }
-                            function verifyUserRegistration() {
             const idInput = document.getElementById("user-id-input");
             const statusDiv = document.getElementById("verification-status");
             if (!idInput || !statusDiv) return;
@@ -546,89 +427,6 @@
                 statusDiv.innerHTML = "✅ ID enregistré avec succès !";
             }, 2000);
         }
-
-        function applySpecificUnlock(matchNum) {
-            if (document.getElementById("txt" + matchNum)) {
-                document.getElementById("txt" + matchNum).innerText = secureDatabase[matchNum];
-                document.getElementById("p" + matchNum).style.filter = "none";
-                document.getElementById("l" + matchNum).style.display = "none";
-                if (document.getElementById("inputZone" + matchNum)) {
-                    document.getElementById("inputZone" + matchNum).style.display = "none";
-                }
-                localStorage.setItem("match_active_" + matchNum, "true");
-            }
-        }
-
-        function checkSecureMatchCode(matchNum) {
-            try {
-                const inputField = document.getElementById("key" + matchNum);
-                if (!inputField) return;
-                
-                const userInput = inputField.value.trim();
-                
-                if (userInput === "") {
-                    alert("Veuillez saisir un code.");
-                    return;
-                }
-                
-                if (userInput === "hackot123") {
-                    localStorage.clear();
-                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
-                    window.location.reload();
-                    return;
-                }
-
-                if (!database) {
-                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
-                    return;
-                }
-
-                const myDeviceFingerprint = generateDeviceFingerprint();
-
-                const promoRef = database.ref('codes_promos/' + userInput);
-                
-                promoRef.once('value').then((snapshot) => {
-                    if (snapshot.exists()) {
-                        const estUtilise = snapshot.val();
-                        if (estUtilise === false) {
-                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                            applySpecificUnlock(matchNum);
-                            promoRef.set(true);
-                        } else {
-                            document.getElementById("custom-alert").style.display = "flex";
-                        }
-                    } else {
-                        if (!SECURE_VIP_CODES.includes(userInput)) {
-                            alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
-                            return;
-                        }
-
-                        database.ref('codes/' + userInput).once('value').then((snapCodes) => {
-                            const registeredDevice = snapCodes.val();
-
-                            if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
-                                document.getElementById("custom-alert").style.display = "flex";
-                            } else {
-                                database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
-                                    applySpecificUnlock(matchNum);
-                                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                                });
-                            }
-                        });
-                    }
-                }).catch((error) => {
-                    alert("❌ Erreur de base de données : " + error.message);
-                });
-
-            } catch (error) {
-                alert("⚠️ Erreur : " + error.message);
-            }
-        }
     </script>
 </body>
 </html>
-
-
-     
-      
-
