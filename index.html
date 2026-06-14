@@ -18,7 +18,7 @@
 
         // Initialisation globale du réseau Firebase
         firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        window.database = firebase.database();
     </script>
 
     <meta charset="UTF-8">
