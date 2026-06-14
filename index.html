@@ -418,6 +418,81 @@
                 statusDiv.innerHTML = "✅ ID enregistré avec succès !";
             }, 2000);
         }
+          function checkSecureMatchCode(matchNum) {
+            try {
+                // Initialisation forcée instantanée au clic
+                if (!window.database && typeof firebase !== 'undefined') {
+                    window.database = firebase.database();
+                }
+                
+                const currentDatabase = window.database;
+                
+                if (!currentDatabase) {
+                    alert("❌ Connexion Internet trop lente. Reclique sur le bouton dans 2 secondes.");
+                    return;
+                }
+
+                const inputField = document.getElementById("key" + matchNum);
+                if (!inputField) return;
+                
+                const userInput = inputField.value.trim();
+                
+                if (userInput === "") {
+                    alert("Veuillez saisir un code.");
+                    return;
+                }
+                
+                if (userInput === "hackot123") {
+                    localStorage.clear();
+                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
+                    window.location.reload();
+                    return;
+                }
+
+                const myDeviceFingerprint = generateDeviceFingerprint();
+
+                // 1. Vérification du code simplifié dans "codes_promos"
+                const promoRef = currentDatabase.ref('codes_promos/' + userInput);
+                
+                promoRef.once('value').then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const estUtilise = snapshot.val();
+                        if (estUtilise === false) {
+                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                            applySpecificUnlock(matchNum);
+                            promoRef.set(true); // Bloque le code instantanément
+                        } else {
+                            document.getElementById("custom-alert").style.display = "flex";
+                        }
+                    } else {
+                        // 2. Vérification du code complexe (SECURE_VIP_CODES)
+                        if (!SECURE_VIP_CODES.includes(userInput)) {
+                            alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
+                            return;
+                        }
+
+                        currentDatabase.ref('codes/' + userInput).once('value').then((snapCodes) => {
+                            const registeredDevice = snapCodes.val();
+
+                            if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
+                                document.getElementById("custom-alert").style.display = "flex";
+                            } else {
+                                currentDatabase.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                                    applySpecificUnlock(matchNum);
+                                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                                });
+                            }
+                        });
+                    }
+                }).catch((error) => {
+                    alert("❌ Erreur de base de données : " + error.message);
+                });
+
+            } catch (error) {
+                alert("⚠️ Erreur : " + error.message);
+            }
+        }
+
     </script>
 </body>
 </html>
