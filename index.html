@@ -471,6 +471,33 @@
         }
 
         }
+    function checkSecureMatchCode(index) {
+    const codeSaisi = document.getElementById('key' + index).value.trim();
+    if (codeSaisi === "") {
+        alert("Veuillez saisir un code.");
+        return;
+    
+    const codeRef = database.ref('codes_promos/' + codeSaisi);
+    codeRef.once('value').then((snapshot) => {
+        if (snapshot.exists()) {
+            const estUtilise = snapshot.val();
+            if (estUtilise === false) {
+                alert("Code valide ! Contenu débloqué.");
+                const overlay = document.getElementById('p' + index);
+                if (overlay) { overlay.style.display = 'none'; }
+                codeRef.set(true);
+            } else {
+                alert("Ce code a déjà été validé sur un autre téléphone.");
+            }
+        } else {
+            alert("Code secret incorrect.");
+        }
+    }).catch((error) => {
+        console.error("Erreur Firebase : ", error);
+        alert("Erreur de connexion au serveur.");
+    });
+}
+
     </script>
 </body>
 </html>
