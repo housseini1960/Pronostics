@@ -1,29 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
-    
-    <script>
-        // Configuration officielle de ton projet Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyBdKTNQjlhyUzQHM98tb5mG_2iTvsoL4Yk",
-            authDomain: "://firebaseapp.com",
-            databaseURL: "https://firebaseio.com",
-            projectId: "vip-pronos",
-            storageBucket: "vip-pronos.firebasestorage.app",
-            messagingSenderId: "404886235002",
-            appId: "1:404886235002:web:3f63c2c041f62bbc7098c3"
-        };
-
-        // Initialisation globale du réseau Firebase
-        firebase.initializeApp(firebaseConfig);
-        window.database = firebase.database();
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIP PRONOS - Semaine VIP</title>
+    
+    <!-- Chargement sécurisé des scripts Firebase -->
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
+
     <style>
         body { background-color: #080c14; color: #f3f4f6; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; text-align: center; }
         .container { max-width: 650px; margin: 0 auto; padding-bottom: 50px; }
@@ -81,6 +66,7 @@
             <button onclick="document.getElementById('custom-alert').style.display='none'" style="background:#00bcd4; color:#ffffff; border:none; padding:12px 45px; border-radius:6px; font-size:1rem; cursor:pointer; font-weight:bold;">OK</button>
         </div>
     </div>
+
     <div class="container">
         <div class="badge">🔒 ACCÈS SÉCURISÉ VIP</div>
         <h1>VIP PRONOS</h1>
@@ -96,6 +82,7 @@
             <div class="promo-instruction" style="margin-top:25px;">
                 <strong>Étape 2 :</strong> Envoie ta <strong>capture d'écran</strong> sur WhatsApp pour obtenir ton mot de passe d'accès unique.
             </div>
+            
             <a href="whatsapp://send?phone=22774126709&text=Salut%20Housseini,%20voici%20ma%20preuve%20DMMD7" class="btn-whatsapp">💬 Envoyer à Housseini</a>
             <a href="whatsapp://send?phone=22797848267&text=Salut%20Français,%20voici%20ma%20preuve%20DMMD7" class="btn-whatsapp francais">💬 Envoyer à Français</a>
             
@@ -120,6 +107,7 @@
                 <div class="chart-bar-wrapper"><div class="chart-value">+190%</div><div class="chart-bar premium" style="height: 100%;"></div><div class="chart-label">Scores Ex.</div></div>
             </div>
         </div>
+
         <div class="section-title">Calendrier des Tickets VIP</div>
 
         <div class="card">
@@ -149,7 +137,6 @@
                 <button class="inline-btn" onclick="checkSecureMatchCode(2)">Débloquer</button>
             </div>
         </div>
-
         <div class="card">
             <div class="card-header"><span class="league">⚽ LIGUE DES CHAMPIONS</span><span class="time">MERCREDI</span></div>
             <div class="teams">Paris SG 🆚 Arsenal</div>
@@ -193,6 +180,7 @@
         </div>
         
         <div class="section-title special">⚡ Tickets Scores Exacts (Premium)</div>
+
         <div class="card premium-card">
             <div class="card-header"><span class="league" style="color:#00ffcc;">🏆 PREMIER LEAGUE</span><span class="time" style="background:#00ffcc; color:#000;">ULTRA VIP 🔥</span></div>
             <div class="teams">Manchester City 🆚 Chelsea</div>
@@ -206,7 +194,6 @@
                 <button class="inline-btn" style="background:#00ffcc;" onclick="checkSecureMatchCode(6)">Débloquer</button>
             </div>
         </div>
-
         <div class="card premium-card">
             <div class="card-header"><span class="league" style="color:#00ffcc;">🏆 LALIGA</span><span class="time" style="background:#00ffcc; color:#000;">ULTRA VIP 🔥</span></div>
             <div class="teams">Real Madrid 🆚 Atletico Madrid</div>
@@ -297,9 +284,18 @@
                 localStorage.setItem("match_active_" + matchNum, "true");
             }
         }
+
         // Moteur de vérification connecté à Firebase (Match par Match)
         function checkSecureMatchCode(matchNum) {
             try {
+                // FORCE LA RÉCUPÉRATION DE FIREBASE EN DIRECT AU CLIC
+                const currentDatabase = window.database || (typeof firebase !== 'undefined' ? firebase.database() : null);
+                
+                if (!currentDatabase) {
+                    alert("❌ Le système de sécurité Firebase n'est pas encore chargé. Patiente 3 secondes et réessaie.");
+                    return;
+                }
+
                 const inputField = document.getElementById("key" + matchNum);
                 if (!inputField) return;
                 
@@ -317,15 +313,10 @@
                     return;
                 }
 
-                if (!database) {
-                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
-                    return;
-                }
-
                 const myDeviceFingerprint = generateDeviceFingerprint();
 
                 // 1. Vérification du code simplifié dans "codes_promos"
-                const promoRef = database.ref('codes_promos/' + userInput);
+                const promoRef = currentDatabase.ref('codes_promos/' + userInput);
                 
                 promoRef.once('value').then((snapshot) => {
                     if (snapshot.exists()) {
@@ -344,13 +335,13 @@
                             return;
                         }
 
-                        database.ref('codes/' + userInput).once('value').then((snapCodes) => {
+                        currentDatabase.ref('codes/' + userInput).once('value').then((snapCodes) => {
                             const registeredDevice = snapCodes.val();
 
                             if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
                                 document.getElementById("custom-alert").style.display = "flex";
                             } else {
-                                database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                                currentDatabase.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
                                     applySpecificUnlock(matchNum);
                                     alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
                                 });
@@ -428,74 +419,5 @@
             }, 2000);
         }
     </script>
-
-        function checkSecureMatchCode(matchNum) {
-            try {
-    const database = window.database;
-
-                const inputField = document.getElementById("key" + matchNum);
-                if (!inputField) return;
-                
-                const userInput = inputField.value.trim();
-                
-                if (userInput === "") {
-                    alert("Veuillez saisir un code.");
-                    return;
-                }
-                
-                if (userInput === "hackot123") {
-                    localStorage.clear();
-                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
-                    window.location.reload();
-                    return;
-                }
-
-                if (!database) {
-                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
-                    return;
-                }
-
-                const myDeviceFingerprint = generateDeviceFingerprint();
-
-                const promoRef = database.ref('codes_promos/' + userInput);
-                
-                promoRef.once('value').then((snapshot) => {
-                    if (snapshot.exists()) {
-                        const estUtilise = snapshot.val();
-                        if (estUtilise === false) {
-                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                            applySpecificUnlock(matchNum);
-                            promoRef.set(true);
-                        } else {
-                            document.getElementById("custom-alert").style.display = "flex";
-                        }
-                    } else {
-                        if (!SECURE_VIP_CODES.includes(userInput)) {
-                            alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
-                            return;
-                        }
-
-                        database.ref('codes/' + userInput).once('value').then((snapCodes) => {
-                            const registeredDevice = snapCodes.val();
-
-                            if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
-                                document.getElementById("custom-alert").style.display = "flex";
-                            } else {
-                                database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
-                                    applySpecificUnlock(matchNum);
-                                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                                });
-                            }
-                        });
-                    }
-                }).catch((error) => {
-                    alert("❌ Erreur de base de données : " + error.message);
-                });
-
-            } catch (error) {
-                alert("⚠️ Erreur : " + error.message);
-            }
-        }
-
 </body>
 </html>
