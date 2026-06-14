@@ -428,10 +428,11 @@
             }, 2000);
         }
     </script>
-            const database = window.database;
 
         function checkSecureMatchCode(matchNum) {
             try {
+    const database = window.database;
+
                 const inputField = document.getElementById("key" + matchNum);
                 if (!inputField) return;
                 
