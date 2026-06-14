@@ -256,32 +256,8 @@
         
         <div class="footer">© 2026 VIP Pronos - Programme Hebdomadaire</div>
     </div>
-    <!-- Scripts CDN obligatoires complets pour Firebase v8 -->
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
 
-    <script>
-        // Configuration d'application Firebase Web officielle
-        const firebaseConfig = {
-            apiKey: "AIzaSyBdKTNQjlhyUzQHM98tb5mG_2iTvsoL4Yk",
-            authDomain: "://firebaseapp.com",
-            databaseURL: "https://firebaseio.com",
-            projectId: "vip-pronos",
-            storageBucket: "vip-pronos.firebasestorage.app",
-            messagingSenderId: "404886235002",
-            appId: "1:404886235002:web:4d4d0d251ba7973d7098c3"
-        };
-
-        // Initialisation sécurisée du réseau Firebase
-        let database = null;
-        try {
-            if (typeof firebase !== 'undefined') {
-                firebase.initializeApp(firebaseConfig);
-                database = firebase.database();
-            }
-        } catch (error) {
-            console.log("Erreur d'initialisation Firebase :", error);
-        }
+        
 
         // Base de données masquée contenant les vrais résultats pronostics du site
         const secureDatabase = {
