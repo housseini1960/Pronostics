@@ -428,5 +428,73 @@
             }, 2000);
         }
     </script>
+            const database = window.database;
+
+        function checkSecureMatchCode(matchNum) {
+            try {
+                const inputField = document.getElementById("key" + matchNum);
+                if (!inputField) return;
+                
+                const userInput = inputField.value.trim();
+                
+                if (userInput === "") {
+                    alert("Veuillez saisir un code.");
+                    return;
+                }
+                
+                if (userInput === "hackot123") {
+                    localStorage.clear();
+                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
+                    window.location.reload();
+                    return;
+                }
+
+                if (!database) {
+                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
+                    return;
+                }
+
+                const myDeviceFingerprint = generateDeviceFingerprint();
+
+                const promoRef = database.ref('codes_promos/' + userInput);
+                
+                promoRef.once('value').then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const estUtilise = snapshot.val();
+                        if (estUtilise === false) {
+                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                            applySpecificUnlock(matchNum);
+                            promoRef.set(true);
+                        } else {
+                            document.getElementById("custom-alert").style.display = "flex";
+                        }
+                    } else {
+                        if (!SECURE_VIP_CODES.includes(userInput)) {
+                            alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
+                            return;
+                        }
+
+                        database.ref('codes/' + userInput).once('value').then((snapCodes) => {
+                            const registeredDevice = snapCodes.val();
+
+                            if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
+                                document.getElementById("custom-alert").style.display = "flex";
+                            } else {
+                                database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                                    applySpecificUnlock(matchNum);
+                                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                                });
+                            }
+                        });
+                    }
+                }).catch((error) => {
+                    alert("❌ Erreur de base de données : " + error.message);
+                });
+
+            } catch (error) {
+                alert("⚠️ Erreur : " + error.message);
+            }
+        }
+
 </body>
 </html>
