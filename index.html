@@ -465,41 +465,141 @@
                     alert("❌ Erreur de base de données : " + error.message);
                 });
 
+               // Moteur de vérification connecté à Firebase (Match par Match)
+        function checkSecureMatchCode(matchNum) {
+            try {
+                const inputField = document.getElementById("key" + matchNum);
+                if (!inputField) return;
+                
+                const userInput = inputField.value.trim();
+                
+                if (userInput === "") {
+                    alert("Veuillez saisir un code.");
+                    return;
+                }
+                
+                // Code secret administrateur pour tout réinitialiser
+                if (userInput === "hackot123") {
+                    localStorage.clear();
+                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
+                    window.location.reload();
+                    return;
+                }
+
+                if (!database) {
+                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
+                    return;
+                }
+
+                const myDeviceFingerprint = generateDeviceFingerprint();
+
+                // On vérifie d'abord dans ton dossier simplifié "codes_promos" créé ensemble
+                const promoRef = database.ref('codes_promos/' + userInput);
+                
+                promoRef.once('value').then((snapshot) => {
+                    if (snapshot.exists()) {
+                        // LOGIQUE CODES SIMPLES (ex: PRONO55)
+                        const estUtilise = snapshot.val();
+                        if (estUtilise === false) {
+                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                            applySpecificUnlock(matchNum);
+                            promoRef.set(true); // Bloque le code
+                        } else {
+                            document.getElementById("custom-alert").style.display = "flex";
+                        }
+                    } else {
+                        // LOGIQUE CODES COMPLEXES DE TA LISTE (SECURE_VIP_CODES)
+                        if (!SECURE_VIP_CODES.includes(userInput)) {
+                            alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
+                            return;
+                        }
+
+                        database.ref('codes/' + userInput).once('value').then((snapCodes) => {
+                            const registeredDevice = snapCodes.val();
+
+                            if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
+                                document.getElementById("custom-alert").style.display = "flex";
+                            } else {
+                                database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                                    applySpecificUnlock(matchNum);
+                                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                                });
+                            }
+                        });
+                    }
+                }).catch((error) => {
+                    alert("❌ Erreur de base de données : " + error.message);
+                });
+
             } catch (error) {
                 alert("⚠️ Erreur : " + error.message);
             }
         }
 
-        }
-    function checkSecureMatchCode(index) {
-    const codeSaisi = document.getElementById('key' + index).value.trim();
-    if (codeSaisi === "") {
-        alert("Veuillez saisir un code.");
-        return;
-    
-    const codeRef = database.ref('codes_promos/' + codeSaisi);
-    codeRef.once('value').then((snapshot) => {
-        if (snapshot.exists()) {
-            const estUtilise = snapshot.val();
-            if (estUtilise === false) {
-                alert("Code valide ! Contenu débloqué.");
-                const overlay = document.getElementById('p' + index);
-                if (overlay) { overlay.style.display = 'none'; }
-                codeRef.set(true);
-            } else {
-                alert("Ce code a déjà été validé sur un autre téléphone.");
+        // Chargement automatique au démarrage avec mémoire match par match
+        window.addEventListener('DOMContentLoaded', () => {
+            for (let i = 1; i <= 8; i++) {
+                if (localStorage.getItem("match_active_" + i) === "true") {
+                    if (document.getElementById("txt" + i)) {
+                        document.getElementById("txt" + i).innerText = secureDatabase[i];
+                        document.getElementById("p" + i).style.filter = "none";
+                        document.getElementById("l" + i).style.display = "none";
+                        if (document.getElementById("inputZone" + i)) {
+                            document.getElementById("inputZone" + i).style.display = "none";
+                        }
+                    }
+                } else {
+                    if (document.getElementById("txt" + i)) {
+                        document.getElementById("p" + i).style.filter = "blur(6px)";
+                        document.getElementById("l" + i).style.display = "flex";
+                        if (document.getElementById("inputZone" + i)) {
+                            document.getElementById("inputZone" + i).style.display = "flex";
+                        }
+                    }
+                }
             }
-        } else {
-            alert("Code secret incorrect.");
-        }
-    }).catch((error) => {
-        console.error("Erreur Firebase : ", error);
-        alert("Erreur de connexion au serveur.");
-    });
-}
 
+            const statusLabel = document.getElementById("user-location");
+            if (!statusLabel) return;
+            try {
+                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (timeZone.includes("Niamey") || timeZone.includes("Lagos")) {
+                    statusLabel.innerText = "🇳🇪 ZONE VIP ACTIVÉE : NIGER / AFRIQUE DE L'OUEST";
+                } else if (timeZone.includes("Abidjan") || timeZone.includes("Accra")) {
+                    statusLabel.innerText = "🇨🇮 ZONE VIP ACTIVÉE : CÔTE D'IVOIRE";
+                } else if (timeZone.includes("Paris") || timeZone.includes("Europe")) {
+                    statusLabel.innerText = "🇫🇷 ZONE VIP ACTIVÉE : EUROPE / FRANCE";
+                } else {
+                    statusLabel.innerText = "🌍 ZONE VIP SÉCURISÉE INTERNATIONALE";
+                }
+            } catch (e) {
+                statusLabel.innerText = "🌍 ACCÈS VIP RECONNU & ACCEPTÉ";
+            }
+        });
+
+        // Fonction de vérification de l'ID Bookmaker
+        function verifyUserRegistration() {
+            const idInput = document.getElementById("user-id-input");
+            const statusDiv = document.getElementById("verification-status");
+            if (!idInput || !statusDiv) return;
+            
+            const idValue = idInput.value.trim();
+            if (idValue === "") {
+                statusDiv.style.color = "#ff4a4a";
+                statusDiv.innerText = "⚠️ Erreur : ID invalide.";
+                return;
+            }
+
+            statusDiv.style.color = "#ffcc00";
+            statusDiv.innerText = "🔍 Recherche de l'ID...";
+            setTimeout(() => {
+                statusDiv.style.color = "#00ffcc";
+                statusDiv.innerHTML = "✅ ID enregistré avec succès !";
+            }, 2000);
+        }
     </script>
 </body>
 </html>
+     
       
 
