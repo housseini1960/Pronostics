@@ -391,18 +391,21 @@
 
             const statusLabel = document.getElementById("user-location");
             if (!statusLabel) return;
-            try {
-                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                if (timeZone.includes("Niamey") || timeZone.includes("Lagos")) {
-                    statusLabel.innerText = "🇳🇪 ZONE VIP ACTIVÉE : NIGER / AFRIQUE DE L'OUEST";
-                } else if (timeZone.includes("Abidjan") || timeZone.includes("Accra")) {
-                    statusLabel.innerText = "🇨🇮 ZONE VIP ACTIVÉE : CÔTE D'IVOIRE";
-                } else if (timeZone.includes("Paris") || timeZone.includes("Europe")) {
-                    statusLabel.innerText = "🇫🇷 ZONE VIP ACTIVÉE : EUROPE / FRANCE";
-                } else {
-                    statusLabel.innerText = "🌍 ZONE VIP SÉCURISÉE INTERNATIONALE";
-                }
-            } catch (e) {
+               // Interrogation de l'API sécurisée pour récupérer la ville et le pays
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                const country = data.country_name ? data.country_name.toUpperCase() : "NIGER";
+                const city = data.city ? data.city.toUpperCase() : "ZONE SÉCURISÉE";
+                
+                // Affichage dynamique et personnalisé pour le client
+                statusLabel.innerText = 🌍 ZONE VIP ACTIVÉE : ${country} (${city})`;
+            })
+            .catch(() => {
+                // En cas de réseau instable, affichage de secours professionnel
+                statusLabel.innerText = "🌍 ZONE VIP ACTIVÉE : AFRIQUE DE L'OUEST";
+            });
+
                 statusLabel.innerText = "🌍 ACCÈS VIP RECONNU & ACCEPTÉ";
             }
         });
