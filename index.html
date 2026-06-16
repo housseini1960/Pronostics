@@ -493,21 +493,14 @@ if (SECURE_VIP_CODES.includes(userInput)) {
                 alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
             });
         }
-    }).catch((error) => {
+        }).catch((error) => {
         alert("❌ Erreur de base de données : " + error.message);
     });
 
 } else {
-    // Le code n'est pas dans la liste des 50 codes
     alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
 }
 
-                    }
-
-            } catch (error) {
-                alert("⚠️ Erreur : " + error.message);
-            }
-        }
 
     </script>
 </body>
