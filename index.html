@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Pronos - Accès Sécurisé</title>
+    <title>👑 PRÉSERVÉ VIP DMMD7 👑</title>
     
     <!-- Connexion officielle aux serveurs Google Firebase -->
     <script src="https://gstatic.com"></script>
@@ -25,109 +25,132 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
     </script>
+
     <style>
-        :root {
-            --premium-gold: #ffcc00;
-            --dark-bg: #0d0d0d;
-            --card-bg: #1a1a1a;
-            --text-light: #ffffff;
-        }
         body {
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b0f19;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .header-title {
-            color: var(--premium-gold);
+            color: #ffcc00;
             text-align: center;
-            font-size: 24px;
+            font-size: 26px;
+            font-weight: 800;
+            text-shadow: 0px 0px 10px rgba(255, 204, 0, 0.6);
+            margin: 20px 0;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
         }
         .match-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
         .card {
-            background: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #111827, #1f2937);
+            border: 2px solid #1f2937;
+            border-radius: 16px;
             padding: 20px;
             text-align: center;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0,5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            border-color: #ffcc00;
         }
         .match-teams {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .blur-zone {
-            filter: blur(5px);
-            user-select: none;
-            font-size: 22px;
-            color: var(--premium-gold);
-            margin: 15px 0;
-            transition: filter 0.3s ease;
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
         }
         .lock-icon {
+            font-size: 15px;
+            color: #ffcc00;
+            font-weight: 600;
+            background: rgba(255, 204, 0, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .blur-zone {
+            filter: blur(6px);
+            user-select: none;
             font-size: 24px;
-            margin-bottom: 10px;
+            font-weight: 800;
+            color: #00ffcc;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 12px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px dashed rgba(0, 255, 204, 0.3);
         }
         .inline-unlock-zone {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             margin-top: 15px;
         }
         .inline-input {
-            background: #222;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 10px;
-            border-radius: 6px;
-            width: 60%;
+            background: #0b0f19;
+            border: 1px solid #374151;
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 8px;
+            width: 65%;
             font-size: 14px;
+            outline: none;
+        }
+        .inline-input:focus {
+            border-color: #ffcc00;
         }
         .inline-btn {
-            background: var(--premium-gold);
-            color: #000;
+            background: #ffcc00;
+            color: #0b0f19;
             border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-weight: bold;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: 700;
             cursor: pointer;
+            transition: background 0.2s;
         }
         .inline-btn:hover {
             background: #e6b800;
         }
         .footer {
             margin-top: 40px;
-            color: #666;
-            font-size: 12px;
+            background: linear-gradient(90deg, #052e16, #14532d);
+            border: 1px solid #16a34a;
+            color: #22c55e;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 12px;
             text-align: center;
+            max-width: 440px;
+            width: 90%;
+            box-shadow: 0px 4px 15px rgba(22, 163, 74, 0.2);
         }
     </style>
 </head>
 <body>
     <div class="header-title">👑 PRÉSERVÉ VIP DMMD7 👑</div>
     <div class="match-container">
+
         <!-- MATCH 1 : LUNDI -->
         <div class="card" id="card1">
             <div class="match-teams">⚽ Bayern Munich vs Real Madrid</div>
-            <div class="lock-icon" id="l1">🔒 Ticket Verrouillé</div>
-            <div class="blur-zone" id="p1">XX - XX</div>
+            <span class="lock-icon" id="l1">🔒 TICKET VERROUILLÉ</span>
+            <div class="blur-zone" id="p1">Score Masqué</div>
             <div class="inline-unlock-zone" id="inputZone1">
-                <input type="text" id="key1" class="inline-input" placeholder="Code secret Lundi...">
+                <input type="text" id="key1" class="inline-input" placeholder="Entrez le code VIP Lundi...">
                 <button class="inline-btn" onclick="checkSecureMatchCode(1)">Débloquer</button>
             </div>
         </div>
@@ -135,10 +158,10 @@
         <!-- MATCH 2 : MARDI -->
         <div class="card" id="card2">
             <div class="match-teams">⚽ Paris SG vs Arsenal</div>
-            <div class="lock-icon" id="l2">🔒 Ticket Verrouillé</div>
-            <div class="blur-zone" id="p2">XX - XX</div>
+            <span class="lock-icon" id="l2">🔒 TICKET VERROUILLÉ</span>
+            <div class="blur-zone" id="p2">Score Masqué</div>
             <div class="inline-unlock-zone" id="inputZone2">
-                <input type="text" id="key2" class="inline-input" placeholder="Code secret Mardi...">
+                <input type="text" id="key2" class="inline-input" placeholder="Entrez le code VIP Mardi...">
                 <button class="inline-btn" onclick="checkSecureMatchCode(2)">Débloquer</button>
             </div>
         </div>
@@ -146,16 +169,16 @@
         <!-- MATCH 3 : MERCREDI -->
         <div class="card" id="card3">
             <div class="match-teams">⚽ Man. City vs Juventus</div>
-            <div class="lock-icon" id="l3">🔒 Ticket Verrouillé</div>
-            <div class="blur-zone" id="p3">XX - XX</div>
+            <span class="lock-icon" id="l3">🔒 TICKET VERROUILLÉ</span>
+            <div class="blur-zone" id="p3">Score Masqué</div>
             <div class="inline-unlock-zone" id="inputZone3">
-                <input type="text" id="key3" class="inline-input" placeholder="Code secret Mercredi...">
+                <input type="text" id="key3" class="inline-input" placeholder="Entrez le code VIP Mercredi...">
                 <button class="inline-btn" onclick="checkSecureMatchCode(3)">Débloquer</button>
             </div>
         </div>
     </div> <!-- Fin du conteneur de matchs -->
 
-    <div class="footer">© 2026 VIP Pronos - Programme Hebdomadaire</div>
+    <div class="footer">✅ TOUS LES SCORES SONT CERTIFIÉS VIP & SÉCURISÉS SUR LE RÉSEAU</div>
     <script>
         // Base de données masquée contenant les vrais résultats pronostics du site
         const secureDatabase = {
@@ -185,6 +208,7 @@
         function generateDeviceFingerprint() {
             return btoa(navigator.userAgent + (navigator.hardwareConcurrency || 2) + (navigator.deviceMemory || 4));
         }
+
         // Cette fonction n'ouvre QUE le match précis qui a été validé
         function applySpecificUnlock(matchNum) {
             if (document.getElementById("p" + matchNum)) {
