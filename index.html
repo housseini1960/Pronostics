@@ -474,31 +474,35 @@
                     return;
                 }
 
+const myDeviceFingerprint = generateDeviceFingerprint();
 
-                const myDeviceFingerprint = generateDeviceFingerprint();
-                        // 2. Vérification du code complexe (SECURE_VIP_CODES)
-                        if (!SECURE_VIP_CODES.includes(userInput)) {
-                            alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
-                            return;
-                        }
-
-                            currentDatabase.ref('codes/' + userInput).once('value').then((snapCodes) => {
-            const registeredDevice = snapCodes.val();
-
-            if (registeredDevice !== null && registeredDevice !== myDeviceFingerprint) {
-                document.getElementById("custom-alert").style.display = "flex";
-            } else {
-                currentDatabase.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
-                    applySpecificUnlock(matchNum);
-                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                });
-            }
-        });
+// 1. Vérification si le code fait partie des 50 codes autorisés
+if (SECURE_VIP_CODES.includes(userInput)) {
     
+    // 2. Vérification de l'empreinte de l'appareil sur Firebase
+    currentDatabase.ref('codes/' + userInput).once('value').then((snapCodes) => {
+        const registeredDevice = snapCodes.val();
+
+        if (registeredDevice !== null && registeredDevice !== myDeviceFingerprint) {
+            // Le code est déjà lié à un AUTRE smartphone -> BLOCAGE
+            document.getElementById("custom-alert").style.display = "flex";
+        } else {
+            // Le code est NEUF ou appartient déjà à cet appareil -> SUCCÈS
+            currentDatabase.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                applySpecificUnlock(matchNum);
+                alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+            });
+        }
+    }).catch((error) => {
+        alert("❌ Erreur de base de données : " + error.message);
+    });
+
+} else {
+    // Le code n'est pas dans la liste des 50 codes
+    alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
+}
+
                     }
-                }).catch((error) => {
-                    alert("❌ Erreur de base de données : " + error.message);
-                });
 
             } catch (error) {
                 alert("⚠️ Erreur : " + error.message);
