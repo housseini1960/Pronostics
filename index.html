@@ -476,39 +476,25 @@
 
 
                 const myDeviceFingerprint = generateDeviceFingerprint();
-
-                // 1. Vérification du code simplifié dans "codes_promos"
-                const promoRef = currentDatabase.ref('codes/' + userInput);
-                
-                promoRef.once('value').then((snapshot) => {
-                    if (snapshot.exists()) {
-                        const estUtilise = snapshot.val();
-                        if (estUtilise === false) {
-                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                            applySpecificUnlock(matchNum);
-                            promoRef.set(true); // Bloque le code instantanément
-                        } else {
-                            document.getElementById("custom-alert").style.display = "flex";
-                        }
-                    } else {
                         // 2. Vérification du code complexe (SECURE_VIP_CODES)
                         if (!SECURE_VIP_CODES.includes(userInput)) {
                             alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
                             return;
                         }
 
-                        currentDatabase.ref('codes/' + userInput).once('value').then((snapCodes) => {
-                            const registeredDevice = snapCodes.val();
+                            currentDatabase.ref('codes/' + userInput).once('value').then((snapCodes) => {
+            const registeredDevice = snapCodes.val();
 
-                            if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
-                                document.getElementById("custom-alert").style.display = "flex";
-                            } else {
-                                currentDatabase.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
-                                    applySpecificUnlock(matchNum);
-                                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
-                                });
-                            }
-                        });
+            if (registeredDevice !== null && registeredDevice !== myDeviceFingerprint) {
+                document.getElementById("custom-alert").style.display = "flex";
+            } else {
+                currentDatabase.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                    applySpecificUnlock(matchNum);
+                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                });
+            }
+        });
+    
                     }
                 }).catch((error) => {
                     alert("❌ Erreur de base de données : " + error.message);
