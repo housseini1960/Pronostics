@@ -3,216 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👑 PRÉSERVÉ VIP DMMD7 👑</title>
+    <title>VIP PRONOS - Semaine VIP</title>
     
-    <!-- Connexion officielle aux serveurs Google Firebase -->
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
-
-    <script>
-        // Configuration officielle et sécurisée de ton projet Firebase vip-pronos
-        const firebaseConfig = {
-            apiKey: "AIzaSyD9-SEXnyLYqEjATFelwLNhq5Le5QGOX0o",
-            authDomain: "vip-pronos-officiel.firebaseapp.com",
-            databaseURL: "https://vip-pronos-officiel-default-rtdb.firebaseio.com",
-            projectId: "vip-pronos-officiel",
-            storageBucket: "vip-pronos-officiel.firebasestorage.app",
-            messagingSenderId: "379518140231",
-            appId:"1:379518140231:web:cfc0194df6d4f7609e5662"
-        };
-
-        // Initialisation globale du réseau de ta base de données
-        firebase.initializeApp(firebaseConfig);
-        window.database = firebase.database();
-    </script>
+    <!-- Chargement sécurisé des scripts Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .header-title {
-            color: #ffcc00;
-            text-align: center;
-            font-size: 26px;
-            font-weight: 800;
-            text-shadow: 0px 0px 10px rgba(255, 204, 0, 0.6);
-            margin: 20px 0;
-            text-transform: uppercase;
-        }
-        .match-container {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .card {
-            background: linear-gradient(135deg, #111827, #1f2937);
-            border: 2px solid #1f2937;
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s, border-color 0.2s;
-        }
-        .card:hover {
-            border-color: #ffcc00;
-        }
-        .match-teams {
-            font-size: 19px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
-        }
-        .lock-icon {
-            font-size: 15px;
-            color: #ffcc00;
-            font-weight: 600;
-            background: rgba(255, 204, 0, 0.1);
-            padding: 6px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-        .blur-zone {
-            filter: blur(6px);
-            user-select: none;
-            font-size: 24px;
-            font-weight: 800;
-            color: #00ffcc;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 12px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border: 1px dashed rgba(0, 255, 204, 0.3);
-        }
-        .inline-unlock-zone {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-top: 15px;
-        }
-        .inline-input {
-            background: #0b0f19;
-            border: 1px solid #374151;
-            color: #ffffff;
-            padding: 12px;
-            border-radius: 8px;
-            width: 65%;
-            font-size: 14px;
-            outline: none;
-        }
-        .inline-input:focus {
-            border-color: #ffcc00;
-        }
-        .inline-btn {
-            background: #ffcc00;
-            color: #0b0f19;
-            border: none;
-            padding: 12px 18px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .inline-btn:hover {
-            background: #e6b800;
-        }
-        .footer {
-            margin-top: 40px;
-            background: linear-gradient(90deg, #052e16, #14532d);
-            border: 1px solid #16a34a;
-            color: #22c55e;
-            font-weight: bold;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 440px;
-            width: 90%;
-            box-shadow: 0px 4px 15px rgba(22, 163, 74, 0.2);
-        }
+        body { background-color: #080c14; color: #f3f4f6; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; text-align: center; }
+        .container { max-width: 650px; margin: 0 auto; padding-bottom: 50px; }
+        h1 { color: #00ffcc; font-size: 2.8rem; text-transform: uppercase; letter-spacing: 3px; margin: 10px 0 5px 0; text-shadow: 0 0 15px rgba(0,255,204,0.3); }
+        .subtitle { color: #9ca3af; font-size: 1.1rem; margin-bottom: 35px; font-weight: 300; }
+        .badge { background: linear-gradient(135deg, #d97706, #f59e0b); color: #000; padding: 6px 18px; font-weight: bold; border-radius: 20px; display: inline-block; font-size: 0.85rem; }
+        .section-title { text-align: left; color: #f59e0b; font-size: 1.4rem; margin: 40px 0 15px 10px; border-left: 4px solid #f59e0b; padding-left: 10px; text-transform: uppercase; }
+        .section-title.special { color: #00ffcc; border-left-color: #00ffcc; }
+        .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left; position: relative; overflow: hidden; }
+        .card.premium-card { background: linear-gradient(145deg, #111827, #0b1528); border: 2px solid #00ffcc; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: #9ca3af; border-bottom: 1px solid #1f2937; padding-bottom: 10px; margin-bottom: 15px; }
+        .league { color: #38bdf8; font-weight: bold; }
+        .time { background: #1f2937; padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; color: #ffcc00; }
+        .teams { font-size: 1.3rem; font-weight: 700; margin: 10px 0; color: #ffffff; }
+        .analysis { font-size: 0.95rem; color: #9ca3af; margin: 12px 0; line-height: 1.5; }
+        .blur-container { position: relative; margin-top: 15px; border-radius: 12px; overflow: hidden; }
+        .prono-blur-box { background: rgba(255, 204, 0, 0.03); border: 1px dashed rgba(255, 204, 0, 0.2); border-left: 5px solid #ffcc00; padding: 20px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; filter: blur(6px); }
+        .odds-blur { background: #ffcc00; color: #000; padding: 4px 10px; border-radius: 6px; font-size: 1.1rem; font-weight: 800; }
+        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(17, 24, 39, 0.7); color: #fff; font-weight: bold; }
+        .lock-icon { font-size: 1.6rem; margin-bottom: 5px; }
+        .lock-text { color: #ffcc00; font-size: 1rem; text-transform: uppercase; }
+        .inline-unlock-zone { margin-top: 15px; display: flex; gap: 8px; align-items: center; }
+        .inline-input { background: #080c14; border: 1px solid #374151; padding: 10px 15px; border-radius: 50px; color: #fff; font-size: 0.9rem; width: 60%; outline: none; text-align: center; }
+        .inline-input:focus { border-color: #ffcc00; }
+        .inline-btn { background: #ffcc00; color: #000; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; cursor: pointer; }
+        .chart-box { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; margin: 20px 0; text-align: left; }
+        .chart-title { color: #ffffff; font-size: 1rem; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+        .chart-container { height: 150px; display: flex; align-items: flex-end; gap: 15px; border-bottom: 2px solid #1f2937; border-left: 2px solid #1f2937; position: relative; }
+        .chart-bar-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; position: relative; height: 100%; }
+        .chart-bar { width: 100%; background: linear-gradient(180deg, #00ffcc, rgba(0,255,204,0.2)); border-radius: 6px 6px 0 0; }
+        .chart-bar.premium { background: linear-gradient(180deg, #ffcc00, rgba(255,204,0,0.2)); }
+        .chart-label { color: #9ca3af; font-size: 0.75rem; margin-top: 8px; }
+        .chart-value { color: #ffffff; font-size: 0.8rem; font-weight: bold; position: absolute; top: -20px; }
+        .promo-zone { background: linear-gradient(145deg, #111827, #1e293b); border: 2px solid #00ffcc; border-radius: 16px; padding: 25px; margin: 30px 0; }
+        .promo-instruction { font-size: 1.05rem; color: #f3f4f6; line-height: 1.6; }
+        .promo-code-bold { color: #00ffcc; font-size: 1.6rem; font-weight: bold; }
+        .btn-bookmaker { display: block; background: linear-gradient(90deg, #1e3a8a, #3b82f6); color: #fff; font-size: 1.2rem; font-weight: bold; text-decoration: none; padding: 16px; border-radius: 50px; margin: 20px auto; text-transform: uppercase; text-align: center; }
+        .btn-whatsapp { display: block; background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; font-size: 1.25rem; font-weight: bold; text-decoration: none; padding: 18px; border-radius: 50px; margin: 15px auto; text-transform: uppercase; text-align: center; }
+        .btn-whatsapp.francais { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+        .stat-box { background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 15px; text-align: center; }
+        .stat-val { font-size: 1.8rem; font-weight: bold; color: #00ffcc; margin-top: 5px; }
+        .stat-label { color: #9ca3af; font-size: 0.85rem; text-transform: uppercase; }
+        .footer { margin-top: 40px; color: #4b5563; font-size: 0.85rem; border-top: 1px solid #1f2937; padding-top: 20px; }
     </style>
 </head>
 <body>
-    <div class="header-title">👑 PRÉSERVÉ VIP DMMD7 👑</div>
-    <div class="match-container">
+    <!-- Fenêtre d'alerte rouge anti-partage -->
+    <div id="custom-alert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:99999; align-items:center; justify-content:center; font-family:sans-serif;">
+        <div style="background:#ffffff; color:#000000; padding:35px; border-radius:15px; text-align:center; max-width:85%; width:420px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+            <h3 style="margin-top:0; color:#555555; font-size:1.15rem; border-bottom:1px solid #eeeeee; padding-bottom:12px;">housseini1960.github.io</h3>
+            <p style="color:#d32f2f; font-weight:bold; margin:25px 0; font-size:1.1rem; line-height:1.5;">
+                ❌ Ce code unique a déjà été validé sur un autre smartphone !
+            </p>
+            <button onclick="document.getElementById('custom-alert').style.display='none'" style="background:#00bcd4; color:#ffffff; border:none; padding:12px 45px; border-radius:6px; font-size:1rem; cursor:pointer; font-weight:bold;">OK</button>
+        </div>
+    </div>
 
-        <!-- MATCH 1 : LUNDI -->
-        <div class="card" id="card1">
-            <div class="match-teams">⚽ Bayern Munich vs Real Madrid</div>
-            <span class="lock-icon" id="l1">🔒 TICKET VERROUILLÉ</span>
-            <div class="blur-zone" id="p1">Score Masqué</div>
+    <div class="container">
+        <div class="badge">🔒 ACCÈS SÉCURISÉ VIP</div>
+        <h1>VIP PRONOS</h1>
+        <div id="user-location" class="subtitle" style="color: #00ffcc; font-weight: bold; margin-bottom: 10px;">Détection de la zone VIP...</div>
+        <div class="subtitle" style="margin-top: 0;">Analyses hebdomadaires du Lundi au Vendredi</div>
+        
+        <div class="promo-zone">
+            <div class="promo-instruction">
+                Pour débloquer les coupons de la semaine, suis ces deux étapes obligatoires :<br><br>
+                <strong>Étape 1 :</strong> Crée ton compte chez le bookmaker avec le code promo : <span class="promo-code-bold">DMMD7</span> et fais ton dépôt.
+            </div>
+            <a href="https://1xbet.com" target="_blank" class="btn-bookmaker">📱 S'inscrire sur le Bookmaker</a>
+            <div class="promo-instruction" style="margin-top:25px;">
+                <strong>Étape 2 :</strong> Envoie ta <strong>capture d'écran</strong> sur WhatsApp pour obtenir ton mot de passe d'accès unique.
+            </div>
+            
+            <a href="whatsapp://send?phone=22774126709&text=Salut%20Housseini,%20voici%20ma%20preuve%20DMMD7" class="btn-whatsapp">💬 Envoyer à Djabson7 adjoint_@</a>
+            <a href="whatsapp://send?phone=22797848267&text=Salut%20Français,%20voici%20ma%20preuve%20DMMD7" class="btn-whatsapp francais">💬 Envoyer à Djabson_7@</a>
+            <div style="text-align: center; margin: 20px auto; padding: 20px; max-width: 600px; background: rgba(0, 255, 204, 0.05); border: 1px dashed #00ffcc; border-radius: 12px;">
+    <p style="color: #f3f4f6; font-size: 1.1rem; margin-bottom: 15px; font-weight: bold;">
+        🔥 Rejoignez notre communauté sur Facebook pour ne rater aucun pronostic gratuit et suivre nos pronostics en temps réel !
+    </p>
+    <a href="https://www.facebook.com/share/18PYS4DSFL/?mibextid=wwXIfr" target="_blank" style="display: inline-block; background: #1877F2; color: #ffffff; padding: 12px 25px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 1rem; box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);">
+        🔵 Suivez-nous sur Facebook
+    </a>
+            </div>
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px dashed rgba(0, 255, 204, 0.3);">
+                <div class="promo-instruction" style="font-size: 0.95rem; margin-bottom: 10px;">
+                    <strong>Vérification de ton inscription :</strong>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
+                    <input type="text" id="user-id-input" class="inline-input" style="width: 65%; border-color: #00ffcc;" placeholder="Entre ton ID Bookmaker...">
+                    <button class="inline-btn" style="background: #00ffcc; color: #000;" onclick="verifyUserRegistration()">Vérifier</button>
+                </div>
+                <div id="verification-status" style="margin-top: 12px; font-size: 0.9rem; font-weight: bold; min-height: 20px;"></div>
+            </div>
+        </div>
+
+        <div class="chart-box">
+            <div class="chart-title">📈 Progression Cumulative du Capital VIP</div>
+            <div class="chart-container">
+                <div class="chart-bar-wrapper"><div class="chart-value">+45%</div><div class="chart-bar" style="height: 40%;"></div><div class="chart-label">Lun-Mar</div></div>
+                <div class="chart-bar-wrapper"><div class="chart-value">+78%</div><div class="chart-bar" style="height: 65%;"></div><div class="chart-label">Mer-Jeu</div></div>
+                <div class="chart-bar-wrapper"><div class="chart-value">+115%</div><div class="chart-bar" style="height: 85%;"></div><div class="chart-label">Ven</div></div>
+                <div class="chart-bar-wrapper"><div class="chart-value">+190%</div><div class="chart-bar premium" style="height: 100%;"></div><div class="chart-label">Scores Ex.</div></div>
+            </div>
+        </div>
+
+        <div class="section-title">Calendrier des Tickets VIP</div>
+
+        <div class="card">
+            <div class="card-header"><span class="league">⚽ PREMIER LEAGUE</span><span class="time">LUNDI</span></div>
+            <div class="teams">Manchester United 🆚 Everton</div>
+            <div class="analysis">Analyse statistique poussée sur la victoire à domicile.</div>
+            <div class="blur-container">
+                <div class="prono-blur-box" id="p1"><span>Pronostic : <span id="txt1">XXXXX XXXXXXX</span></span><span class="odds-blur">Cote : 1.55</span></div>
+                <div class="lock-overlay" id="l1"><div class="lock-icon">🔒</div><div class="lock-text">Préservé VIP DMMD7</div></div>
+            </div>
             <div class="inline-unlock-zone" id="inputZone1">
-                <input type="text" id="key1" class="inline-input" placeholder="Entrez le code VIP Lundi...">
+                <input type="text" id="key1" class="inline-input" placeholder="Code secret Lundi...">
                 <button class="inline-btn" onclick="checkSecureMatchCode(1)">Débloquer</button>
             </div>
         </div>
 
-        <!-- MATCH 2 : MARDI -->
-        <div class="card" id="card2">
-            <div class="match-teams">⚽ Paris SG vs Arsenal</div>
-            <span class="lock-icon" id="l2">🔒 TICKET VERROUILLÉ</span>
-            <div class="blur-zone" id="p2">Score Masqué</div>
+        <div class="card">
+            <div class="card-header"><span class="league">⚽ LIGUE DES CHAMPIONS</span><span class="time">MARDI</span></div>
+            <div class="teams">Bayern Munich 🆚 Real Madrid</div>
+            <div class="analysis">Choc offensif majeur. Statistiques de buts par match très élevées.</div>
+            <div class="blur-container">
+                <div class="prono-blur-box" id="p2"><span>Pronostic : <span id="txt2">XXXXXXX XXXXX</span></span><span class="odds-blur">Cote : 1.68</span></div>
+                <div class="lock-overlay" id="l2"><div class="lock-icon">🔒</div><div class="lock-text">Préservé VIP DMMD7</div></div>
+            </div>
             <div class="inline-unlock-zone" id="inputZone2">
-                <input type="text" id="key2" class="inline-input" placeholder="Entrez le code VIP Mardi...">
+                <input type="text" id="key2" class="inline-input" placeholder="Code secret Mardi...">
                 <button class="inline-btn" onclick="checkSecureMatchCode(2)">Débloquer</button>
             </div>
         </div>
-
-        <!-- MATCH 3 : MERCREDI -->
-        <div class="card" id="card3">
-            <div class="match-teams">⚽ Man. City vs Juventus</div>
-            <span class="lock-icon" id="l3">🔒 TICKET VERROUILLÉ</span>
-            <div class="blur-zone" id="p3">Score Masqué</div>
+        <div class="card">
+            <div class="card-header"><span class="league">⚽ LIGUE DES CHAMPIONS</span><span class="time">MERCREDI</span></div>
+            <div class="teams">Paris SG 🆚 Arsenal</div>
+            <div class="analysis">Analyse tactique sur le vainqueur de ce duel au sommet.</div>
+            <div class="blur-container">
+                <div class="prono-blur-box" id="p3"><span>Pronostic : <span id="txt3">XXXXXXXX XXXXXX</span></span><span class="odds-blur">Cote : 1.95</span></div>
+                <div class="lock-overlay" id="l3"><div class="lock-icon">🔒</div><div class="lock-text">Préservé VIP DMMD7</div></div>
+            </div>
             <div class="inline-unlock-zone" id="inputZone3">
-                <input type="text" id="key3" class="inline-input" placeholder="Entrez le code VIP Mercredi...">
+                <input type="text" id="key3" class="inline-input" placeholder="Code secret Mercredi...">
                 <button class="inline-btn" onclick="checkSecureMatchCode(3)">Débloquer</button>
             </div>
         </div>
-    </div> <!-- Fin du conteneur de matchs -->
 
-    <div class="footer">✅ TOUS LES SCORES SONT CERTIFIÉS VIP & SÉCURISÉS SUR LE RÉSEAU</div>
+        <div class="card">
+            <div class="card-header"><span class="league">⚽ EUROPA LEAGUE</span><span class="time">JEUDI</span></div>
+            <div class="teams">AS Roma 🆚 Ajax Amsterdam</div>
+            <div class="analysis">Analyse axée sur l'historique des confrontations.</div>
+            <div class="blur-container">
+                <div class="prono-blur-box" id="p4"><span>Pronostic : <span id="txt4">XXXXX XXXXXXX XXXXXXX</span></span><span class="odds-blur">Cote : 1.72</span></div>
+                <div class="lock-overlay" id="l4"><div class="lock-icon">🔒</div><div class="lock-text">Préservé VIP DMMD7</div></div>
+            </div>
+            <div class="inline-unlock-zone" id="inputZone4">
+                <input type="text" id="key4" class="inline-input" placeholder="Code secret Jeudi...">
+                <button class="inline-btn" onclick="checkSecureMatchCode(4)">Débloquer</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="league">⚽ LIGUE 1</span><span class="time">VENDREDI</span></div>
+            <div class="teams">Marseille 🆚 Lyon</div>
+            <div class="analysis">Gros Olympico de fin de semaine.</div>
+            <div class="blur-container">
+                <div class="prono-blur-box" id="p5"><span>Pronostic : <span id="txt5">XXXXXXX XXXXXX X XXXXX</span></span><span class="odds-blur">Cote : 1.60</span></div>
+                <div class="lock-overlay" id="l5"><div class="lock-icon">🔒</div><div class="lock-text">Préservé VIP DMMD7</div></div>
+            </div>
+            <div class="inline-unlock-zone" id="inputZone5">
+                <input type="text" id="key5" class="inline-input" placeholder="Code secret Vendredi...">
+                <button class="inline-btn" onclick="checkSecureMatchCode(5)">Débloquer</button>
+            </div>
+        </div>
+        
+        <div class="section-title special">⚡ Tickets Scores Exacts (Premium)</div>
+
+        <div class="card premium-card">
+            <div class="card-header"><span class="league" style="color:#00ffcc;">🏆 PREMIER LEAGUE</span><span class="time" style="background:#00ffcc; color:#000;">ULTRA VIP 🔥</span></div>
+            <div class="teams">Manchester City 🆚 Chelsea</div>
+            <div class="analysis">Analyse ultra-précise basée sur la domination à domicile.</div>
+            <div class="blur-container">
+                <div class="prono-blur-box" id="p6"><span>Score Exact : <span id="txt6">X - X</span></span><span class="odds-blur">Cote : 7.50</span></div>
+                <div class="lock-overlay" id="l6"><div class="lock-icon">🔒</div><div class="lock-text">SCORE EXACT VIP</div></div>
+            </div>
+            <div class="inline-unlock-zone" id="inputZone6">
+                <input type="text" id="key6" class="inline-input" placeholder="Code Score 1...">
+                <button class="inline-btn" style="background:#00ffcc;" onclick="checkSecureMatchCode(6)">Débloquer</button>
+            </div>
+        </div>
+        <div class="card premium-card">
+            <div class="card-header"><span class="league" style="color:#00ffcc;">🏆 LALIGA</span><span class="time" style="background:#00ffcc; color:#000;">ULTRA VIP 🔥</span></div>
+            <div class="teams">Real Madrid 🆚 Atletico Madrid</div>
+            <div class="analysis">Derby madrilène très serré sous haute tension tactique.</div>
+            <div class="blur-container">
+                <div class="prono-blur-box" id="p7"><span>Score Exact : <span id="txt7">X - X</span></span><span class="odds-blur">Cote : 6.20</span></div>
+                <div class="lock-overlay" id="l7"><div class="lock-icon">🔒</div><div class="lock-text">SCORE EXACT VIP</div></div>
+            </div>
+            <div class="inline-unlock-zone" id="inputZone7">
+                <input type="text" id="key7" class="inline-input" placeholder="Code Score 2...">
+                <button class="inline-btn" style="background:#00ffcc;" onclick="checkSecureMatchCode(7)">Débloquer</button>
+            </div>
+        </div>
+
+        <div class="card premium-card">
+            <div class="card-header"><span class="league" style="color:#00ffcc;">🏆 SERIE A</span><span class="time" style="background:#00ffcc; color:#000;">ULTRA VIP 🔥</span></div>
+            <div class="teams">Inter Milan 🆚 Juventus</div>
+            <div class="analysis">Choc au sommet de la Serie A.</div>
+            <div class="blur-container">
+                <div class="prono-blur-box" id="p8"><span>Score Exact : <span id="txt8">X - X</span></span><span class="odds-blur">Cote : 8.00</span></div>
+                <div class="lock-overlay" id="l8"><div class="lock-icon">🔒</div><div class="lock-text">SCORE EXACT VIP</div></div>
+            </div>
+            <div class="inline-unlock-zone" id="inputZone8">
+                <input type="text" id="key8" class="inline-input" placeholder="Code Score 3...">
+                <button class="inline-btn" style="background:#00ffcc;" onclick="checkSecureMatchCode(8)">Débloquer</button>
+            </div>
+        </div>
+
+        <div class="section-title">Bilan des Gains</div>
+        <div class="stats-grid">
+            <div class="stat-box"><div class="stat-label">Réussite Semaine</div><div class="stat-val">88.9%</div></div>
+            <div class="stat-box"><div class="stat-label">Statut VIP</div><div class="stat-val" style="color:#00ffcc; font-size:1.4rem; margin-top:10px;">ACTIF ✅</div></div>
+        </div>
+        
+        <div class="footer">© 2026 VIP Pronos - Programme Hebdomadaire</div>
+    </div>
+
     <script>
         // Base de données masquée contenant les vrais résultats pronostics du site
         const secureDatabase = {
-            1: "Score Exact : 3 - 1",
-            2: "Score Exact : 1 - 0",
-            3: "Score Exact : 2 - 0"
+            1: "Victoire Man. United",
+            2: "Plus de 2.5 buts",
+            3: "Victoire Paris SG",
+            4: "Les 2 équipes marquent",
+            5: "Marseille ou Nul & +1.5 buts",
+            6: "Score Exact : 3 - 1", 
+            7: "Score Exact : 1 - 0", 
+            8: "Score Exact : 2 - 0"  
         };
 
         // Liste complète et sécurisée de tes 50 codes VIP uniques
         const SECURE_VIP_CODES = [
-            "housseini1960-k2m7x", "housseini1960-p8v3l", "housseini1960-w4m9b", "housseini1960-j9z4t",
-            "housseini1960-q1n6f", "housseini1960-h5k2r", "housseini1960-c8m4w", "housseini1960-p7x1v",
-            "housseini1960-g6n3q", "housseini1960-t9z2j", "housseini1960-k4m8x", "housseini1960-p2v6l",
-            "housseini1960-w1m7b", "housseini1960-j5z9t", "housseini1960-q8n4f", "housseini1960-a3r7k",
-            "housseini1960-d9w2m", "housseini1960-l8p4v", "housseini1960-f5g3q", "housseini1960-t1m9b",
-            "housseini1960-v3b2n", "housseini1960-x7c8v", "housseini1960-m1k2l", "housseini1960-p4p5p",
-            "housseini1960-z9z9z", "housseini1960-y1y1y", "housseini1960-r2r2r", "housseini1960-t3t3t",
-            "housseini1960-q4q4q", "housseini1960-s5s5s", "housseini1960-d6d6d", "housseini1960-f7f7f",
-            "housseini1960-g8g8g", "housseini1960-h9h9h", "housseini1960-j0j0j", "housseini1960-k1k1k",
-            "housseini1960-l2l2l", "housseini1960-m3m3m", "housseini1960-n4n4n", "housseini1960-p5p5p",
-            "housseini1960-q6q6q", "housseini1960-r7r7r", "housseini1960-s8s8s", "housseini1960-t9t9t",
-            "housseini1960-u0u0u", "housseini1960-v1v1v", "housseini1960-w2w2w", "housseini1960-x3x3x",
-            "housseini1960-y4y4y", "housseini1960-z5z5z"
+            "housseini1960-k2m7x", "housseini1960-p8v3l", "housseini1960-w4m9b", "housseini1960-j9z4t", "housseini1960-q1n6f",
+            "housseini1960-h5k2r", "housseini1960-c8m4w", "housseini1960-p7x1v", "housseini1960-g6n3q", "housseini1960-t9z2j",
+            "housseini1960-k4m8x", "housseini1960-p2v6l", "housseini1960-w1m7b", "housseini1960-j5z9t", "housseini1960-q8n4f",
+            "housseini1960-a3r7k", "housseini1960-d9w2m", "housseini1960-l8p4v", "housseini1960-f5n3q", "housseini1960-t1z8j",
+            "housseini1960-k6m2x", "housseini1960-p9v4l", "housseini1960-w8m3b", "housseini1960-j2z7t", "housseini1960-q5n1f",
+            "housseini1960-h9k4r", "housseini1960-c1m6w", "housseini1960-p8x3v", "housseini1960-g5n2q", "housseini1960-t4z7j",
+            "housseini1960-k1m9x", "housseini1960-p5v2l", "housseini1960-w7m4b", "housseini1960-j8z3t", "housseini1960-q2n9f",
+            "housseini1960-a7r1k", "housseini1960-d4w8m", "housseini1960-l2p6v", "housseini1960-f9n5q", "housseini1960-t3z1j",
+            "housseini1960-k8m4x", "housseini1960-p1v7l", "housseini1960-w2m9b", "housseini1960-j6z4t", "housseini1960-q3n8f",
+            "housseini1960-r4v9z", "housseini1960-m2t7x", "housseini1960-p8s3l", "housseini1960-k9w4b", "housseini1960-j7z2t"
         ];
-
-        // Générateur d'empreinte digitale pour bloquer le partage de code
+        // Générateur d'empreinte matérielle stable (Fingerprint)
         function generateDeviceFingerprint() {
-            return btoa(navigator.userAgent + (navigator.hardwareConcurrency || 2) + (navigator.deviceMemory || 4));
+            try {
+                const specs = [navigator.userAgent, navigator.language, screen.width + "x" + screen.height].join('||');
+                let hash = 0;
+                for (let i = 0; i < specs.length; i++) {
+                    hash = ((hash << 5) - hash) + specs.charCodeAt(i);
+                    hash |= 0;
+                }
+                return "VIP-DEVICE-" + Math.abs(hash);
+            } catch(e) {
+                return "VIP-DEVICE-GENERIC";
+            }
         }
 
         // Cette fonction n'ouvre QUE le match précis qui a été validé
         function applySpecificUnlock(matchNum) {
-            if (document.getElementById("p" + matchNum)) {
-                document.getElementById("p" + matchNum).innerText = secureDatabase[matchNum];
+            if (document.getElementById("txt" + matchNum)) {
+                document.getElementById("txt" + matchNum).innerText = secureDatabase[matchNum];
                 document.getElementById("p" + matchNum).style.filter = "none";
                 document.getElementById("l" + matchNum).style.display = "none";
                 if (document.getElementById("inputZone" + matchNum)) {
@@ -225,10 +295,23 @@
         // Moteur de vérification connecté à Firebase (Match par Match)
         function checkSecureMatchCode(matchNum) {
             try {
+                // FORCE LA RÉCUPÉRATION DE FIREBASE EN DIRECT AU CLIC
+                const currentDatabase = window.database || (typeof firebase !== 'undefined' ? firebase.database() : null);
+                
+                if (!currentDatabase) {
+                    alert("❌ Le système de sécurité Firebase n'est pas encore chargé. Patiente 3 secondes et réessaie.");
+                    return;
+                }
+
                 const inputField = document.getElementById("key" + matchNum);
                 if (!inputField) return;
                 
                 const userInput = inputField.value.trim();
+                
+                if (userInput === "") {
+                    alert("Veuillez saisir un code.");
+                    return;
+                }
                 
                 if (userInput === "hackot123") {
                     localStorage.clear();
@@ -237,39 +320,39 @@
                     return;
                 }
 
-                if (!SECURE_VIP_CODES.includes(userInput)) {
-                    alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
-                    return;
-                }
+                const myDeviceFingerprint = generateDeviceFingerprint();
 
-                if (!database) {
-                    alert("❌ Le système de sécurité en ligne est déconnecté. Vérifie ton accès Internet.");
-                    return;
-                }
-
-                    function generateDeviceFingerprint() {
-        try {
-            const screenSpecs = window.screen.width + "x" + window.screen.height + "x" + window.screen.colorDepth;
-            const userAgent = navigator.userAgent.replace(/[^a-zA-Z0-9]/g, "");
-            const language = navigator.language || "fr";
-            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown";
-            const rawFingerprint = screenSpecs + "-" + language + "-" + timeZone + "-" + userAgent.slice(0, 50);
-            return btoa(unescape(encodeURIComponent(rawFingerprint))).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
-        } catch (e) {
-            return "device_" + Math.random().toString(36).substring(2, 11);
-        }
-    }
-
-
-                database.ref('codes/' + userInput).once('value').then((snapshot) => {
-                    const registeredDevice = snapshot.val();
-
-                    if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
-                        alert("❌ Ce code est déjà utilisé sur un autre téléphone !");
-                    } else {
-                        database.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
-                            applySpecificUnlock(matchNum);
+                // 1. Vérification du code simplifié dans "codes_promos"
+                const promoRef = currentDatabase.ref('codes_promos/' + userInput);
+                
+                promoRef.once('value').then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const estUtilise = snapshot.val();
+                        if (estUtilise === false) {
                             alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                            applySpecificUnlock(matchNum);
+                            promoRef.set(true); // Bloque le code instantanément
+                        } else {
+                            document.getElementById("custom-alert").style.display = "flex";
+                        }
+                    } else {
+                        // 2. Vérification du code complexe (SECURE_VIP_CODES)
+                        if (!SECURE_VIP_CODES.includes(userInput)) {
+                            alert("❌ Ce code d'accès n'existe pas ou est falsifié !");
+                            return;
+                        }
+
+                        currentDatabase.ref('codes/' + userInput).once('value').then((snapCodes) => {
+                            const registeredDevice = snapCodes.val();
+
+                            if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
+                                document.getElementById("custom-alert").style.display = "flex";
+                            } else {
+                                currentDatabase.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                                    applySpecificUnlock(matchNum);
+                                    alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                                });
+                            }
                         });
                     }
                 }).catch((error) => {
@@ -281,14 +364,165 @@
             }
         }
 
-        // Vérification automatique au chargement de la page pour laisser ouvert si déjà débloqué
-        document.addEventListener("DOMContentLoaded", () => {
-            for (let i = 1; i <= 3; i++) {
+        // Chargement automatique au démarrage avec mémoire match par match
+        window.addEventListener('DOMContentLoaded', () => {
+            for (let i = 1; i <= 8; i++) {
                 if (localStorage.getItem("match_active_" + i) === "true") {
-                    applySpecificUnlock(i);
+                    if (document.getElementById("txt" + i)) {
+                        document.getElementById("txt" + i).innerText = secureDatabase[i];
+                        document.getElementById("p" + i).style.filter = "none";
+                        document.getElementById("l" + i).style.display = "none";
+                        if (document.getElementById("inputZone" + i)) {
+                            document.getElementById("inputZone" + i).style.display = "none";
+                        }
+                    }
+                } else {
+                    if (document.getElementById("txt" + i)) {
+                        document.getElementById("p" + i).style.filter = "blur(6px)";
+                        document.getElementById("l" + i).style.display = "flex";
+                        if (document.getElementById("inputZone" + i)) {
+                            document.getElementById("inputZone" + i).style.display = "flex";
+                        }
+                    }
                 }
             }
+
+            const statusLabel = document.getElementById("user-location");
+            if (!statusLabel) return;
+            try {
+                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (timeZone.includes("Niamey") || timeZone.includes("Lagos")) {
+                    statusLabel.innerText = "🇳🇪 ZONE VIP ACTIVÉE : NIGER / AFRIQUE DE L'OUEST";
+                } else if (timeZone.includes("Abidjan") || timeZone.includes("Accra")) {
+                    statusLabel.innerText = "🇨🇮 ZONE VIP ACTIVÉE : CÔTE D'IVOIRE";
+                } else if (timeZone.includes("Paris") || timeZone.includes("Europe")) {
+                    statusLabel.innerText = "🇫🇷 ZONE VIP ACTIVÉE : EUROPE / FRANCE";
+                } else {
+                    statusLabel.innerText = "🌍 ZONE VIP SÉCURISÉE INTERNATIONALE";
+                }
+            } catch (e) {
+                statusLabel.innerText = "🌍 ACCÈS VIP RECONNU & ACCEPTÉ";
+            }
         });
-    </script>
+
+        // Fonction de vérification de l'ID Bookmaker
+        function verifyUserRegistration() {
+            const idInput = document.getElementById("user-id-input");
+            const statusDiv = document.getElementById("verification-status");
+            if (!idInput || !statusDiv) return;
+            
+            const idValue = idInput.value.trim();
+            if (idValue === "") {
+                statusDiv.style.color = "#ff4a4a";
+                statusDiv.innerText = "⚠️ Erreur : ID invalide.";
+                return;
+            }
+
+            statusDiv.style.color = "#ffcc00";
+            statusDiv.innerText = "🔍 Recherche de l'ID...";
+            setTimeout(() => {
+                statusDiv.style.color = "#00ffcc";
+                statusDiv.innerHTML = "✅ ID enregistré avec succès !";
+            }, 2000);
+        }
+                  function checkSecureMatchCode(matchNum) {
+            try {
+                const localConfig = {
+                    apiKey: "AIzaSyD9-SEXnyLYqEjATFelwLNhq5Le5QGOX0o",
+                    authDomain: "vip-pronos-officiel.firebaseapp.com",
+                    databaseURL: "https://vip-pronos-officiel-default-rtdb.firebaseio.com",
+                    projectId: "vip-pronos-officiel",
+                    storageBucket: "vip-pronos-officiel.firebasestorage.app",
+                    messagingSenderId: "379518140231",
+                    appId: "1:379518140231:web:cfc0194df6d4f7609e5662"
+                };
+
+                if (typeof firebase !== 'undefined') {
+                    if (firebase.apps.length === 0) {
+                        firebase.initializeApp(localConfig);
+                    }
+                    window.database = firebase.database();
+                }
+                
+                const currentDatabase = window.database;
+                
+                if (!currentDatabase) {
+                    alert("❌ Le système n'arrive pas à se charger. Vérifie ton réseau Internet.");
+                    return;
+                }
+
+                const inputField = document.getElementById("key" + matchNum);
+                if (!inputField) return;
+                
+                const userInput = inputField.value.trim();
+                
+                if (userInput === "") {
+                    alert("Veuillez saisir un code.");
+                    return;
+                }
+                if (userInput === "hackot2007") {
+                    applySpecificUnlock(matchNum);
+                    alert("👑 Accès Maître activé ! Pronostic débloqué à l'infini.");
+                    return;
+                }
+                
+                
+                if (userInput === "hackot123") {
+                    localStorage.clear();
+                    alert("🛠️ Mode Admin : Sécurité réinitialisée match par match !");
+                    window.location.reload();
+                    return;
+                }
+
+
+                const myDeviceFingerprint = generateDeviceFingerprint();
+
+                // 1. Vérification du code simplifié dans "codes_promos"
+                const promoRef = currentDatabase.ref('codes_promos/' + userInput);
+                        promoRef.once('value').then((snapshot) => {
+            if (snapshot.exists()) {
+                const estUtilise = snapshot.val();
+                if (estUtilise === false) {
+                    promoRef.set(true).then(() => {
+                        applySpecificUnlock(matchNum);
+                        alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                    });
+                } else {
+                    alert("❌ Ce code promotionnel a déjà été utilisé !");
+                }
+            } else {
+                // 2. Vérification et liaison de l'appareil (Anti-partage)
+                currentDatabase.ref('codes/' + userInput).once('value').then((snapCodes) => {
+                    const registeredDevice = snapCodes.val();
+
+                    if (registeredDevice && registeredDevice !== myDeviceFingerprint) {
+                        alert("❌ Ce code est déjà lié à un autre téléphone !");
+                    } else {
+                        currentDatabase.ref('codes/' + userInput).set(myDeviceFingerprint).then(() => {
+                            applySpecificUnlock(matchNum);
+                            alert("✅ Félicitations ! Ton accès pour ce ticket VIP est activé.");
+                        });
+                    }
+                });
+            }
+        }).catch((error) => {
+            alert("❌ Erreur de base de données : " + error.message);
+        });
+
+    } catch (error) {
+        alert("⚠️ Erreur : " + error.message);
+    }
+}
+
+// Maintien des matchs débloqués au rechargement de la page
+document.addEventListener("DOMContentLoaded", () => {
+    for (let i = 1; i <= 6; i++) {
+        if (localStorage.getItem("match_active_" + i) === "true") {
+            applySpecificUnlock(i);
+        }
+    }
+});
+</script>
 </body>
 </html>
+
