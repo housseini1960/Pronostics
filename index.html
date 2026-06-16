@@ -478,7 +478,7 @@
                 const myDeviceFingerprint = generateDeviceFingerprint();
 
                 // 1. Vérification du code simplifié dans "codes_promos"
-                const promoRef = currentDatabase.ref('codes_promos/' + userInput);
+                const promoRef = currentDatabase.ref('codes/' + userInput);
                 
                 promoRef.once('value').then((snapshot) => {
                     if (snapshot.exists()) {
