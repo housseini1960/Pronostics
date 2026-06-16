@@ -247,7 +247,19 @@
                     return;
                 }
 
-                const myDeviceFingerprint = generateDeviceFingerprint();
+                    function generateDeviceFingerprint() {
+        try {
+            const screenSpecs = window.screen.width + "x" + window.screen.height + "x" + window.screen.colorDepth;
+            const userAgent = navigator.userAgent.replace(/[^a-zA-Z0-9]/g, "");
+            const language = navigator.language || "fr";
+            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown";
+            const rawFingerprint = screenSpecs + "-" + language + "-" + timeZone + "-" + userAgent.slice(0, 50);
+            return btoa(unescape(encodeURIComponent(rawFingerprint))).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
+        } catch (e) {
+            return "device_" + Math.random().toString(36).substring(2, 11);
+        }
+    }
+
 
                 database.ref('codes/' + userInput).once('value').then((snapshot) => {
                     const registeredDevice = snapshot.val();
