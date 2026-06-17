@@ -10,50 +10,227 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
-        body { background-color: #080c14; color: #f3f4f6; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 650px; margin: 0 auto; padding-bottom: 50px; }
-        h1 { color: #00ffcc; font-size: 2.8rem; text-transform: uppercase; letter-spacing: 3px; margin: 10px 0 5px 0; text-shadow: 0 0 15px rgba(0,255,204,0.3); }
-        .subtitle { color: #9ca3af; font-size: 1.1rem; margin-bottom: 35px; font-weight: 300; }
-        .badge { background: linear-gradient(135deg, #d97706, #f59e0b); color: #000; padding: 6px 18px; font-weight: bold; border-radius: 20px; display: inline-block; font-size: 0.85rem; }
-        .section-title { text-align: left; color: #f59e0b; font-size: 1.4rem; margin: 40px 0 15px 10px; border-left: 4px solid #f59e0b; padding-left: 10px; text-transform: uppercase; }
-        .section-title.special { color: #00ffcc; border-left-color: #00ffcc; }
-        .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left; position: relative; overflow: hidden; }
-        .card.premium-card { background: linear-gradient(145deg, #111827, #0b1528); border: 2px solid #00ffcc; }
-        .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: #9ca3af; border-bottom: 1px solid #1f2937; padding-bottom: 10px; margin-bottom: 15px; }
-        .league { color: #38bdf8; font-weight: bold; }
-        .time { background: #1f2937; padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; color: #ffcc00; }
-        .teams { font-size: 1.3rem; font-weight: 700; margin: 10px 0; color: #ffffff; }
-        .analysis { font-size: 0.95rem; color: #9ca3af; margin: 12px 0; line-height: 1.5; }
-        .blur-container { position: relative; margin-top: 15px; border-radius: 12px; overflow: hidden; }
-        .prono-blur-box { background: rgba(255, 204, 0, 0.03); border: 1px dashed rgba(255, 204, 0, 0.2); border-left: 5px solid #ffcc00; padding: 20px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; filter: blur(6px); }
-        .odds-blur { background: #ffcc00; color: #000; padding: 4px 10px; border-radius: 6px; font-size: 1.1rem; font-weight: 800; }
-        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(17, 24, 39, 0.7); color: #fff; font-weight: bold; }
-        .lock-icon { font-size: 1.6rem; margin-bottom: 5px; }
-        .lock-text { color: #ffcc00; font-size: 1rem; text-transform: uppercase; }
-        .inline-unlock-zone { margin-top: 15px; display: flex; gap: 8px; align-items: center; }
-        .inline-input { background: #080c14; border: 1px solid #374151; padding: 10px 15px; border-radius: 50px; color: #fff; font-size: 0.9rem; width: 60%; outline: none; text-align: center; }
-        .inline-input:focus { border-color: #ffcc00; }
-        .inline-btn { background: #ffcc00; color: #000; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; cursor: pointer; }
-        .chart-box { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; margin: 20px 0; text-align: left; }
-        .chart-title { color: #ffffff; font-size: 1rem; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
-        .chart-container { height: 150px; display: flex; align-items: flex-end; gap: 15px; border-bottom: 2px solid #1f2937; border-left: 2px solid #1f2937; position: relative; }
-        .chart-bar-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; position: relative; height: 100%; }
-        .chart-bar { width: 100%; background: linear-gradient(180deg, #00ffcc, rgba(0,255,204,0.2)); border-radius: 6px 6px 0 0; }
-        .chart-bar.premium { background: linear-gradient(180deg, #ffcc00, rgba(255,204,0,0.2)); }
-        .chart-label { color: #9ca3af; font-size: 0.75rem; margin-top: 8px; }
-        .chart-value { color: #ffffff; font-size: 0.8rem; font-weight: bold; position: absolute; top: -20px; }
-        .promo-zone { background: linear-gradient(145deg, #111827, #1e293b); border: 2px solid #00ffcc; border-radius: 16px; padding: 25px; margin: 30px 0; }
-        .promo-instruction { font-size: 1.05rem; color: #f3f4f6; line-height: 1.6; }
-        .promo-code-bold { color: #00ffcc; font-size: 1.6rem; font-weight: bold; }
-        .btn-bookmaker { display: block; background: linear-gradient(90deg, #1e3a8a, #3b82f6); color: #fff; font-size: 1.2rem; font-weight: bold; text-decoration: none; padding: 16px; border-radius: 50px; margin: 20px auto; text-transform: uppercase; text-align: center; }
-        .btn-whatsapp { display: block; background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; font-size: 1.25rem; font-weight: bold; text-decoration: none; padding: 18px; border-radius: 50px; margin: 15px auto; text-transform: uppercase; text-align: center; }
-        .btn-whatsapp.francais { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
-        .stat-box { background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 15px; text-align: center; }
-        .stat-val { font-size: 1.8rem; font-weight: bold; color: #00ffcc; margin-top: 5px; }
-        .stat-label { color: #9ca3af; font-size: 0.85rem; text-transform: uppercase; }
-        .footer { margin-top: 40px; color: #4b5563; font-size: 0.85rem; border-top: 1px solid #1f2937; padding-top: 20px; }
-    </style>
+    /* Base de la page - Ambiance sombre et moderne */
+    body { 
+        background-color: #060913; 
+        color: #f3f4f6; 
+        font-family: 'Segoe UI', Roboto, sans-serif; 
+        margin: 0; 
+        padding: 20px; 
+        text-align: center; 
+        -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 650px; margin: 0 auto; padding-bottom: 50px; }
+    
+    /* Titre principal avec effet néon cyan */
+    h1 { 
+        color: #00ffcc; 
+        font-size: 2.5rem; 
+        text-transform: uppercase; 
+        letter-spacing: 3px; 
+        margin: 15px 0 5px 0; 
+        text-shadow: 0 0 10px rgba(0, 255, 204, 0.4), 0 0 20px rgba(0, 255, 204, 0.2); 
+    }
+    .subtitle { color: #9ca3af; font-size: 1rem; margin-bottom: 35px; font-weight: 300; }
+    
+    /* Badges et titres de sections */
+    .badge { 
+        background: linear-gradient(135deg, #f59e0b, #d97706); 
+        color: #000; 
+        padding: 6px 18px; 
+        font-weight: bold; 
+        border-radius: 20px; 
+        display: inline-block; 
+        font-size: 0.85rem; 
+        box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2);
+    }
+    .section-title { 
+        text-align: left; 
+        color: #f59e0b; 
+        font-size: 1.3rem; 
+        margin: 40px 0 15px 10px; 
+        border-left: 4px solid #f59e0b; 
+        padding-left: 10px; 
+        text-transform: uppercase; 
+        letter-spacing: 1px;
+    }
+    .section-title.special { 
+        color: #00ffcc; 
+        border-left-color: #00ffcc; 
+        text-shadow: 0 0 8px rgba(0, 255, 204, 0.2);
+    }
+    
+    /* Cartes de Matchs stylisées */
+    .card { 
+        background: #0f1626; 
+        border: 1px solid #1e293b; 
+        border-radius: 16px; 
+        padding: 20px; 
+        margin-bottom: 20px; 
+        text-align: left; 
+        position: relative; 
+        overflow: hidden; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    /* Carte VIP Or avec lueur */
+    .card.premium-card { 
+        background: linear-gradient(145deg, #111827, #070d19); 
+        border: 2px solid #00ffcc; 
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.15), inset 0 0 10px rgba(0, 255, 204, 0.05);
+    }
+    
+    /* En-tête des cartes */
+    .card-header { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        font-size: 0.85rem; 
+        color: #9ca3af; 
+        border-bottom: 1px solid #1e293b; 
+        padding-bottom: 10px; 
+        margin-bottom: 15px; 
+    }
+    .league { color: #38bdf8; font-weight: bold; letter-spacing: 0.5px; }
+    .time { background: #1e293b; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; color: #ffcc00; }
+    .teams { font-size: 1.25rem; font-weight: 700; margin: 10px 0; color: #ffffff; }
+    .analysis { font-size: 0.9rem; color: #9ca3af; margin: 12px 0; line-height: 1.5; }
+    
+    /* Zone masquée et floutée */
+    .blur-container { position: relative; margin-top: 15px; border-radius: 12px; overflow: hidden; }
+    .prono-blur-box { 
+        background: rgba(7, 12, 22, 0.6); 
+        border: 1px dashed rgba(255, 204, 0, 0.2); 
+        border-left: 5px solid #ffcc00; 
+        padding: 20px; 
+        font-weight: bold; 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        filter: blur(8px); 
+    }
+    .odds-blur { background: #ffcc00; color: #000; padding: 4px 10px; border-radius: 6px; font-size: 1.05rem; font-weight: 800; }
+    
+    /* Superposition du Cadenas d'accès */
+    .lock-overlay { 
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        background: rgba(10, 15, 30, 0.8); 
+        color: #fff; 
+        font-weight: bold; 
+        backdrop-filter: blur(2px);
+    }
+    .lock-icon { font-size: 1.8rem; margin-bottom: 5px; animation: pulse 2s infinite alternate; }
+    .lock-text { color: #ffcc00; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
+    
+    /* Formulaire de déblocage avec design néon */
+    .inline-unlock-zone { margin-top: 15px; display: flex; gap: 8px; align-items: center; }
+    .inline-input { 
+        background: #060913; 
+        border: 1px solid #1e293b; 
+        padding: 12px 15px; 
+        border-radius: 50px; 
+        color: #fff; 
+        font-size: 0.9rem; 
+        width: 60%; 
+        outline: none; 
+        text-align: center; 
+        transition: all 0.3s ease;
+    }
+    .inline-input:focus { border-color: #ffcc00; box-shadow: 0 0 10px rgba(255, 204, 0, 0.2); }
+    
+    /* Bouton Débloquer Or avec pulsation lumineuse */
+    .inline-btn { 
+        background: linear-gradient(135deg, #ffcc00, #e6b800); 
+        color: #000; 
+        border: none; 
+        padding: 12px 22px; 
+        border-radius: 50px; 
+        font-weight: 900; 
+        cursor: pointer; 
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 12px rgba(255, 204, 0, 0.3);
+    }
+    .inline-btn:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 0 18px rgba(255, 204, 0, 0.5); 
+    }
+    
+    /* Graphique de Capital modernisé */
+    .chart-box { background: #0f1626; border: 1px solid #1e293b; border-radius: 16px; padding: 20px; margin: 20px 0; text-align: left; }
+    .chart-title { color: #ffffff; font-size: 0.95rem; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px; }
+    .chart-container { height: 150px; display: flex; align-items: flex-end; gap: 15px; border-bottom: 2px solid #1e293b; border-left: 2px solid #1e293b; position: relative; padding-left: 5px; }
+    .chart-bar-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; position: relative; height: 100%; }
+    .chart-bar { width: 100%; background: linear-gradient(180deg, #00ffcc, rgba(0,255,204,0.05)); border-radius: 6px 6px 0 0; border-top: 1px solid #00ffcc; }
+    .chart-bar.premium { background: linear-gradient(180deg, #ffcc00, rgba(255,204,0,0.05)); border-top: 1px solid #ffcc00; }
+    .chart-label { color: #9ca3af; font-size: 0.7rem; margin-top: 8px; }
+    .chart-value { color: #ffffff; font-size: 0.75rem; font-weight: bold; position: absolute; top: -20px; }
+    
+    /* Zones promotionnelles et boutons d'action */
+    .promo-zone { background: linear-gradient(145deg, #0f1626, #1e293b); border: 2px solid #00ffcc; border-radius: 16px; padding: 25px; margin: 30px 0; box-shadow: 0 0 15px rgba(0, 255, 204, 0.1); }
+    .promo-instruction { font-size: 1rem; color: #f3f4f6; line-height: 1.6; }
+    .promo-code-bold { color: #00ffcc; font-size: 1.5rem; font-weight: bold; text-shadow: 0 0 10px rgba(0, 255, 204, 0.3); }
+    
+    .btn-bookmaker { 
+        display: block; 
+        background: linear-gradient(90deg, #1d4ed8, #3b82f6); 
+        color: #fff; 
+        font-size: 1.1rem; 
+        font-weight: bold; 
+        text-decoration: none; 
+        padding: 16px; 
+        border-radius: 50px; 
+        margin: 20px auto; 
+        text-transform: uppercase; 
+        text-align: center; 
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    .btn-bookmaker:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); }
+    
+    /* Boutons de contact réseaux sociaux */
+    .btn-whatsapp { 
+        display: block; 
+        background: linear-gradient(90deg, #25D366, #128C7E); 
+        color: #fff; 
+        font-size: 1.1rem; 
+        font-weight: bold; 
+        text-decoration: none; 
+        padding: 16px; 
+        border-radius: 50px; 
+        margin: 15px auto; 
+        text-transform: uppercase; 
+        text-align: center; 
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+    .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); }
+    .btn-whatsapp.francais { background: linear-gradient(90deg, #1877F2, #115dc7); box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3); }
+    .btn-whatsapp.francais:hover { box-shadow: 0 6px 20px rgba(24, 119, 242, 0.5); }
+    
+    /* Grille de statistiques */
+    ...stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+    .stat-box { background: #0f1626; border: 1px solid #1e293b; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .stat-val { color: #00ffcc; font-size: 1.6rem; font-weight: bold; margin-top: 5px; text-shadow: 0 0 8px rgba(0, 255, 204, 0.2); }
+    .stat-label { color: #9ca3af; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    
+    .footer { margin-top: 40px; color: #4b5563; font-size: 0.8rem; border-top: 1px solid #1e293b; padding-top: 20px; letter-spacing: 0.5px; }
+    
+    /* Animation de pulsation douce pour le cadenas */
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.9; }
+        100% { transform: scale(1.08); opacity: 1; }
+    }
+</style>
 </head>
 <body>
     <!-- Fenêtre d'alerte rouge anti-partage -->
